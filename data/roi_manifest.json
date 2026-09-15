@@ -1,0 +1,1646 @@
+{
+"a_L(L)": {
+"n_vertices": 1591,
+"n_faces": 3000,
+"centroid": [
+460.8237609863281,
+95.91422271728516,
+154.74949645996094
+],
+"side": "L",
+"base": "a_L",
+"source_units": "voxel"
+},
+"a_L(R)": {
+"n_vertices": 1525,
+"n_faces": 3000,
+"centroid": [
+309.8861389160156,
+100.82928466796875,
+153.09280395507812
+],
+"side": "R",
+"base": "a_L",
+"source_units": "voxel"
+},
+"AB(L)": {
+"n_vertices": 366,
+"n_faces": 484,
+"centroid": [
+395.37530517578125,
+177.16348266601562,
+196.25030517578125
+],
+"side": "L",
+"base": "AB",
+"source_units": "voxel"
+},
+"AB(R)": {
+"n_vertices": 655,
+"n_faces": 878,
+"centroid": [
+380.3736267089844,
+178.9006805419922,
+194.83164978027344
+],
+"side": "R",
+"base": "AB",
+"source_units": "voxel"
+},
+"AbN1(L)": {
+"n_vertices": 1023,
+"n_faces": 2033,
+"centroid": [
+485.79315185546875,
+403.7867431640625,
+1004.1741333007812
+],
+"side": "L",
+"base": "AbN1",
+"source_units": "voxel"
+},
+"AbN1(R)": {
+"n_vertices": 1435,
+"n_faces": 2858,
+"centroid": [
+320.72833251953125,
+367.2587585449219,
+994.8580932617188
+],
+"side": "R",
+"base": "AbN1",
+"source_units": "voxel"
+},
+"AbN2(L)": {
+"n_vertices": 1220,
+"n_faces": 2434,
+"centroid": [
+458.394775390625,
+355.1506042480469,
+946.84521484375
+],
+"side": "L",
+"base": "AbN2",
+"source_units": "voxel"
+},
+"AbN2(R)": {
+"n_vertices": 1504,
+"n_faces": 3000,
+"centroid": [
+369.2767639160156,
+334.3533630371094,
+944.1806030273438
+],
+"side": "R",
+"base": "AbN2",
+"source_units": "voxel"
+},
+"AbN3(L)": {
+"n_vertices": 1508,
+"n_faces": 3000,
+"centroid": [
+443.0185546875,
+362.76416015625,
+1018.8145141601562
+],
+"side": "L",
+"base": "AbN3",
+"source_units": "voxel"
+},
+"AbN3(R)": {
+"n_vertices": 1505,
+"n_faces": 3000,
+"centroid": [
+380.1937561035156,
+330.4057922363281,
+1007.9882202148438
+],
+"side": "R",
+"base": "AbN3",
+"source_units": "voxel"
+},
+"AbN4(L)": {
+"n_vertices": 1510,
+"n_faces": 2999,
+"centroid": [
+439.141357421875,
+369.41265869140625,
+1031.264892578125
+],
+"side": "L",
+"base": "AbN4",
+"source_units": "voxel"
+},
+"AbN4(R)": {
+"n_vertices": 1507,
+"n_faces": 2999,
+"centroid": [
+382.3724365234375,
+338.9624938964844,
+1011.32470703125
+],
+"side": "R",
+"base": "AbN4",
+"source_units": "voxel"
+},
+"AbNT(L)": {
+"n_vertices": 1514,
+"n_faces": 2999,
+"centroid": [
+418.02142333984375,
+389.60321044921875,
+1053.580078125
+],
+"side": "L",
+"base": "AbNT",
+"source_units": "voxel"
+},
+"AbNT(R)": {
+"n_vertices": 1512,
+"n_faces": 3000,
+"centroid": [
+385.8737487792969,
+359.9361267089844,
+1054.4713134765625
+],
+"side": "R",
+"base": "AbNT",
+"source_units": "voxel"
+},
+"ADMN(L)": {
+"n_vertices": 1500,
+"n_faces": 2999,
+"centroid": [
+500.6009521484375,
+424.8877868652344,
+666.9224853515625
+],
+"side": "L",
+"base": "ADMN",
+"source_units": "voxel"
+},
+"ADMN(R)": {
+"n_vertices": 1508,
+"n_faces": 2999,
+"centroid": [
+296.0008850097656,
+411.5391540527344,
+662.2503051757812
+],
+"side": "R",
+"base": "ADMN",
+"source_units": "voxel"
+},
+"AL(L)": {
+"n_vertices": 1507,
+"n_faces": 2999,
+"centroid": [
+445.8814697265625,
+215.72579956054688,
+126.9104995727539
+],
+"side": "L",
+"base": "AL",
+"source_units": "voxel"
+},
+"AL(R)": {
+"n_vertices": 1508,
+"n_faces": 3000,
+"centroid": [
+327.62890625,
+229.2683868408203,
+130.24468994140625
+],
+"side": "R",
+"base": "AL",
+"source_units": "voxel"
+},
+"AME(L)": {
+"n_vertices": 1014,
+"n_faces": 1858,
+"centroid": [
+572.5671997070312,
+259.3624572753906,
+208.3392333984375
+],
+"side": "L",
+"base": "AME",
+"source_units": "voxel"
+},
+"AME(R)": {
+"n_vertices": 1512,
+"n_faces": 3000,
+"centroid": [
+208.97805786132812,
+268.8974914550781,
+216.8631134033203
+],
+"side": "R",
+"base": "AME",
+"source_units": "voxel"
+},
+"ANm": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+404.3876953125,
+384.1033935546875,
+952.5445556640625
+],
+"side": "M",
+"base": "ANm",
+"source_units": "voxel"
+},
+"AOTU(L)": {
+"n_vertices": 1527,
+"n_faces": 2999,
+"centroid": [
+523.8339233398438,
+125.792236328125,
+149.6067657470703
+],
+"side": "L",
+"base": "AOTU",
+"source_units": "voxel"
+},
+"AOTU(R)": {
+"n_vertices": 1514,
+"n_faces": 3000,
+"centroid": [
+250.7840576171875,
+134.1916961669922,
+157.63876342773438
+],
+"side": "R",
+"base": "AOTU",
+"source_units": "voxel"
+},
+"ATL(L)": {
+"n_vertices": 1536,
+"n_faces": 3000,
+"centroid": [
+416.5379333496094,
+122.18480682373047,
+238.36354064941406
+],
+"side": "L",
+"base": "ATL",
+"source_units": "voxel"
+},
+"ATL(R)": {
+"n_vertices": 1566,
+"n_faces": 3000,
+"centroid": [
+356.58050537109375,
+124.12837982177734,
+238.5266571044922
+],
+"side": "R",
+"base": "ATL",
+"source_units": "voxel"
+},
+"AVLP(L)": {
+"n_vertices": 1575,
+"n_faces": 2999,
+"centroid": [
+532.5103759765625,
+193.84544372558594,
+174.4277801513672
+],
+"side": "L",
+"base": "AVLP",
+"source_units": "voxel"
+},
+"AVLP(R)": {
+"n_vertices": 1505,
+"n_faces": 2999,
+"centroid": [
+245.0366973876953,
+203.43150329589844,
+183.31015014648438
+],
+"side": "R",
+"base": "AVLP",
+"source_units": "voxel"
+},
+"b_L(L)": {
+"n_vertices": 1508,
+"n_faces": 2999,
+"centroid": [
+428.0768127441406,
+141.41688537597656,
+136.82461547851562
+],
+"side": "L",
+"base": "b_L",
+"source_units": "voxel"
+},
+"b_L(R)": {
+"n_vertices": 1514,
+"n_faces": 2999,
+"centroid": [
+347.8328552246094,
+144.61236572265625,
+139.0609893798828
+],
+"side": "R",
+"base": "b_L",
+"source_units": "voxel"
+},
+"bL(L)": {
+"n_vertices": 1514,
+"n_faces": 2999,
+"centroid": [
+434.7848815917969,
+155.66307067871094,
+133.2285614013672
+],
+"side": "L",
+"base": "bL",
+"source_units": "voxel"
+},
+"bL(R)": {
+"n_vertices": 1510,
+"n_faces": 3000,
+"centroid": [
+339.15216064453125,
+161.20626831054688,
+137.23159790039062
+],
+"side": "R",
+"base": "bL",
+"source_units": "voxel"
+},
+"BU(L)": {
+"n_vertices": 1553,
+"n_faces": 3000,
+"centroid": [
+450.6459655761719,
+151.66627502441406,
+165.73284912109375
+],
+"side": "L",
+"base": "BU",
+"source_units": "voxel"
+},
+"BU(R)": {
+"n_vertices": 1483,
+"n_faces": 2822,
+"centroid": [
+323.7263488769531,
+160.1184539794922,
+166.68382263183594
+],
+"side": "R",
+"base": "BU",
+"source_units": "voxel"
+},
+"CA(L)": {
+"n_vertices": 1514,
+"n_faces": 2999,
+"centroid": [
+472.9590759277344,
+103.10965728759766,
+264.4557189941406
+],
+"side": "L",
+"base": "CA",
+"source_units": "voxel"
+},
+"CA(R)": {
+"n_vertices": 1505,
+"n_faces": 3000,
+"centroid": [
+299.4553527832031,
+110.43356323242188,
+269.5552062988281
+],
+"side": "R",
+"base": "CA",
+"source_units": "voxel"
+},
+"CAN(L)": {
+"n_vertices": 1526,
+"n_faces": 2792,
+"centroid": [
+414.3550109863281,
+259.0492248535156,
+234.72056579589844
+],
+"side": "L",
+"base": "CAN",
+"source_units": "voxel"
+},
+"CAN(R)": {
+"n_vertices": 1610,
+"n_faces": 3000,
+"centroid": [
+370.2140197753906,
+264.53424072265625,
+233.76904296875
+],
+"side": "R",
+"base": "CAN",
+"source_units": "voxel"
+},
+"CRE(L)": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+432.5663757324219,
+136.07745361328125,
+130.67684936523438
+],
+"side": "L",
+"base": "CRE",
+"source_units": "voxel"
+},
+"CRE(R)": {
+"n_vertices": 1555,
+"n_faces": 3000,
+"centroid": [
+343.2911682128906,
+142.00047302246094,
+129.70706176757812
+],
+"side": "R",
+"base": "CRE",
+"source_units": "voxel"
+},
+"CvN(L)": {
+"n_vertices": 1396,
+"n_faces": 2765,
+"centroid": [
+445.6045837402344,
+400.6667175292969,
+436.3214111328125
+],
+"side": "L",
+"base": "CvN",
+"source_units": "voxel"
+},
+"CvN(R)": {
+"n_vertices": 320,
+"n_faces": 623,
+"centroid": [
+361.1096496582031,
+403.566650390625,
+428.21942138671875
+],
+"side": "R",
+"base": "CvN",
+"source_units": "voxel"
+},
+"DMetaN(L)": {
+"n_vertices": 1509,
+"n_faces": 2999,
+"centroid": [
+473.9835205078125,
+393.2351379394531,
+862.8844604492188
+],
+"side": "L",
+"base": "DMetaN",
+"source_units": "voxel"
+},
+"DMetaN(R)": {
+"n_vertices": 1507,
+"n_faces": 2999,
+"centroid": [
+337.4437561035156,
+374.9392395019531,
+871.9718627929688
+],
+"side": "R",
+"base": "DMetaN",
+"source_units": "voxel"
+},
+"DProN(L)": {
+"n_vertices": 1509,
+"n_faces": 2999,
+"centroid": [
+497.7243957519531,
+448.31298828125,
+520.4972534179688
+],
+"side": "L",
+"base": "DProN",
+"source_units": "voxel"
+},
+"DProN(R)": {
+"n_vertices": 1509,
+"n_faces": 2999,
+"centroid": [
+307.5657653808594,
+440.5586853027344,
+545.3405151367188
+],
+"side": "R",
+"base": "DProN",
+"source_units": "voxel"
+},
+"EB": {
+"n_vertices": 1506,
+"n_faces": 3000,
+"centroid": [
+387.2382507324219,
+161.84603881835938,
+162.4521026611328
+],
+"side": "M",
+"base": "EB",
+"source_units": "voxel"
+},
+"EPA(L)": {
+"n_vertices": 1508,
+"n_faces": 2999,
+"centroid": [
+457.3282775878906,
+195.73004150390625,
+205.3253936767578
+],
+"side": "L",
+"base": "EPA",
+"source_units": "voxel"
+},
+"EPA(R)": {
+"n_vertices": 1508,
+"n_faces": 2999,
+"centroid": [
+322.7579040527344,
+203.59341430664062,
+204.79737854003906
+],
+"side": "R",
+"base": "EPA",
+"source_units": "voxel"
+},
+"FB": {
+"n_vertices": 1504,
+"n_faces": 2999,
+"centroid": [
+389.3574523925781,
+155.27951049804688,
+194.7710723876953
+],
+"side": "M",
+"base": "FB",
+"source_units": "voxel"
+},
+"FLA(L)": {
+"n_vertices": 1503,
+"n_faces": 2999,
+"centroid": [
+413.3272705078125,
+270.4566650390625,
+184.8671417236328
+],
+"side": "L",
+"base": "FLA",
+"source_units": "voxel"
+},
+"FLA(R)": {
+"n_vertices": 1504,
+"n_faces": 2999,
+"centroid": [
+367.257568359375,
+277.2717590332031,
+184.97560119628906
+],
+"side": "R",
+"base": "FLA",
+"source_units": "voxel"
+},
+"gL(L)": {
+"n_vertices": 1505,
+"n_faces": 3000,
+"centroid": [
+445.653564453125,
+141.22474670410156,
+125.33843231201172
+],
+"side": "L",
+"base": "gL",
+"source_units": "voxel"
+},
+"gL(R)": {
+"n_vertices": 1536,
+"n_faces": 3000,
+"centroid": [
+326.5149230957031,
+147.5594024658203,
+130.09727478027344
+],
+"side": "R",
+"base": "gL",
+"source_units": "voxel"
+},
+"GNG": {
+"n_vertices": 1483,
+"n_faces": 2999,
+"centroid": [
+388.72686767578125,
+317.6073913574219,
+237.75352478027344
+],
+"side": "M",
+"base": "GNG",
+"source_units": "voxel"
+},
+"GOR(L)": {
+"n_vertices": 1507,
+"n_faces": 3000,
+"centroid": [
+434.8211364746094,
+186.1778106689453,
+219.9464111328125
+],
+"side": "L",
+"base": "GOR",
+"source_units": "voxel"
+},
+"GOR(R)": {
+"n_vertices": 1511,
+"n_faces": 2999,
+"centroid": [
+345.99072265625,
+191.69833374023438,
+218.22898864746094
+],
+"side": "R",
+"base": "GOR",
+"source_units": "voxel"
+},
+"HTct(UTct-T3)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+432.66815185546875,
+392.1597900390625,
+815.12158203125
+],
+"side": "L",
+"base": "HTct(UTct-T3)",
+"source_units": "voxel"
+},
+"HTct(UTct-T3)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+371.1317443847656,
+385.9610595703125,
+813.4046020507812
+],
+"side": "R",
+"base": "HTct(UTct-T3)",
+"source_units": "voxel"
+},
+"IB": {
+"n_vertices": 1502,
+"n_faces": 2999,
+"centroid": [
+387.5219421386719,
+170.0358123779297,
+251.88417053222656
+],
+"side": "M",
+"base": "IB",
+"source_units": "voxel"
+},
+"ICL(L)": {
+"n_vertices": 1502,
+"n_faces": 2999,
+"centroid": [
+459.5377502441406,
+153.92660522460938,
+219.4341278076172
+],
+"side": "L",
+"base": "ICL",
+"source_units": "voxel"
+},
+"ICL(R)": {
+"n_vertices": 1504,
+"n_faces": 2999,
+"centroid": [
+317.7837829589844,
+160.51853942871094,
+222.6354522705078
+],
+"side": "R",
+"base": "ICL",
+"source_units": "voxel"
+},
+"IntTct": {
+"n_vertices": 1494,
+"n_faces": 3000,
+"centroid": [
+401.20745849609375,
+407.43365478515625,
+706.0526123046875
+],
+"side": "M",
+"base": "IntTct",
+"source_units": "voxel"
+},
+"IPS(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+449.1577453613281,
+244.98129272460938,
+280.0712890625
+],
+"side": "L",
+"base": "IPS",
+"source_units": "voxel"
+},
+"IPS(R)": {
+"n_vertices": 1505,
+"n_faces": 2999,
+"centroid": [
+333.2220764160156,
+252.4669189453125,
+282.83489990234375
+],
+"side": "R",
+"base": "IPS",
+"source_units": "voxel"
+},
+"LA(L)": {
+"n_vertices": 1510,
+"n_faces": 3000,
+"centroid": [
+688.9497680664062,
+242.2967987060547,
+205.00457763671875
+],
+"side": "L",
+"base": "LA",
+"source_units": "voxel"
+},
+"LA(R)": {
+"n_vertices": 1489,
+"n_faces": 2999,
+"centroid": [
+90.7890396118164,
+288.9687805175781,
+210.74951171875
+],
+"side": "R",
+"base": "LA",
+"source_units": "voxel"
+},
+"LAL(L)": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+450.74188232421875,
+196.30751037597656,
+164.10321044921875
+],
+"side": "L",
+"base": "LAL",
+"source_units": "voxel"
+},
+"LAL(R)": {
+"n_vertices": 1518,
+"n_faces": 3000,
+"centroid": [
+327.9168701171875,
+204.8991241455078,
+166.3579864501953
+],
+"side": "R",
+"base": "LAL",
+"source_units": "voxel"
+},
+"LegNp(T1)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+463.0820007324219,
+464.9070739746094,
+598.7391967773438
+],
+"side": "L",
+"base": "LegNp(T1)",
+"source_units": "voxel"
+},
+"LegNp(T1)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+333.91802978515625,
+468.4457092285156,
+602.4469604492188
+],
+"side": "R",
+"base": "LegNp(T1)",
+"source_units": "voxel"
+},
+"LegNp(T2)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+453.9928894042969,
+485.0099182128906,
+767.9253540039062
+],
+"side": "L",
+"base": "LegNp(T2)",
+"source_units": "voxel"
+},
+"LegNp(T2)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+343.87261962890625,
+476.0246276855469,
+772.2525024414062
+],
+"side": "R",
+"base": "LegNp(T2)",
+"source_units": "voxel"
+},
+"LegNp(T3)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+450.8592224121094,
+435.7032775878906,
+928.6439819335938
+],
+"side": "L",
+"base": "LegNp(T3)",
+"source_units": "voxel"
+},
+"LegNp(T3)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+360.3866882324219,
+429.0030822753906,
+933.5624389648438
+],
+"side": "R",
+"base": "LegNp(T3)",
+"source_units": "voxel"
+},
+"LH(L)": {
+"n_vertices": 1523,
+"n_faces": 2999,
+"centroid": [
+546.9060668945312,
+108.28448486328125,
+231.3483428955078
+],
+"side": "L",
+"base": "LH",
+"source_units": "voxel"
+},
+"LH(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+226.81016540527344,
+118.591796875,
+236.92066955566406
+],
+"side": "R",
+"base": "LH",
+"source_units": "voxel"
+},
+"LO(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+564.0986328125,
+238.5318145751953,
+281.0837707519531
+],
+"side": "L",
+"base": "LO",
+"source_units": "voxel"
+},
+"LO(R)": {
+"n_vertices": 1505,
+"n_faces": 3000,
+"centroid": [
+203.81854248046875,
+250.33355712890625,
+285.1462097167969
+],
+"side": "R",
+"base": "LO",
+"source_units": "voxel"
+},
+"LOP(L)": {
+"n_vertices": 1552,
+"n_faces": 3000,
+"centroid": [
+594.6151733398438,
+254.025634765625,
+314.5138854980469
+],
+"side": "L",
+"base": "LOP",
+"source_units": "voxel"
+},
+"LOP(R)": {
+"n_vertices": 1512,
+"n_faces": 3000,
+"centroid": [
+180.24246215820312,
+274.9217224121094,
+316.72271728515625
+],
+"side": "R",
+"base": "LOP",
+"source_units": "voxel"
+},
+"LTct": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+397.4798889160156,
+442.61480712890625,
+689.5241088867188
+],
+"side": "M",
+"base": "LTct",
+"source_units": "voxel"
+},
+"ME(L)": {
+"n_vertices": 1505,
+"n_faces": 3000,
+"centroid": [
+646.71875,
+255.3462371826172,
+258.4864807128906
+],
+"side": "L",
+"base": "ME",
+"source_units": "voxel"
+},
+"ME(R)": {
+"n_vertices": 1504,
+"n_faces": 2999,
+"centroid": [
+135.4862823486328,
+286.3896179199219,
+268.5999755859375
+],
+"side": "R",
+"base": "ME",
+"source_units": "voxel"
+},
+"MesoAN(L)": {
+"n_vertices": 1504,
+"n_faces": 3000,
+"centroid": [
+487.31182861328125,
+436.6902770996094,
+860.9860229492188
+],
+"side": "L",
+"base": "MesoAN",
+"source_units": "voxel"
+},
+"MesoAN(R)": {
+"n_vertices": 1503,
+"n_faces": 3000,
+"centroid": [
+318.346435546875,
+409.6921081542969,
+872.1139526367188
+],
+"side": "R",
+"base": "MesoAN",
+"source_units": "voxel"
+},
+"MesoLN(L)": {
+"n_vertices": 1495,
+"n_faces": 2999,
+"centroid": [
+479.5340576171875,
+522.1314086914062,
+860.793212890625
+],
+"side": "L",
+"base": "MesoLN",
+"source_units": "voxel"
+},
+"MesoLN(R)": {
+"n_vertices": 1500,
+"n_faces": 3000,
+"centroid": [
+317.705322265625,
+507.4544677734375,
+863.8467407226562
+],
+"side": "R",
+"base": "MesoLN",
+"source_units": "voxel"
+},
+"MetaLN(L)": {
+"n_vertices": 1500,
+"n_faces": 2999,
+"centroid": [
+451.2029724121094,
+452.4881591796875,
+1024.8875732421875
+],
+"side": "L",
+"base": "MetaLN",
+"source_units": "voxel"
+},
+"MetaLN(R)": {
+"n_vertices": 1507,
+"n_faces": 2999,
+"centroid": [
+359.4769287109375,
+444.31634521484375,
+1029.2320556640625
+],
+"side": "R",
+"base": "MetaLN",
+"source_units": "voxel"
+},
+"mVAC(T1)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+438.94244384765625,
+479.21875,
+622.0665893554688
+],
+"side": "L",
+"base": "mVAC(T1)",
+"source_units": "voxel"
+},
+"mVAC(T1)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+355.03802490234375,
+479.8536682128906,
+622.4791259765625
+],
+"side": "R",
+"base": "mVAC(T1)",
+"source_units": "voxel"
+},
+"mVAC(T2)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+424.3362731933594,
+483.4579772949219,
+741.4185180664062
+],
+"side": "L",
+"base": "mVAC(T2)",
+"source_units": "voxel"
+},
+"mVAC(T2)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+374.35711669921875,
+478.4478759765625,
+737.7659912109375
+],
+"side": "R",
+"base": "mVAC(T2)",
+"source_units": "voxel"
+},
+"mVAC(T3)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+422.14501953125,
+462.7499084472656,
+863.6492309570312
+],
+"side": "L",
+"base": "mVAC(T3)",
+"source_units": "voxel"
+},
+"mVAC(T3)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+384.2669677734375,
+458.2400207519531,
+864.71435546875
+],
+"side": "R",
+"base": "mVAC(T3)",
+"source_units": "voxel"
+},
+"NO": {
+"n_vertices": 1385,
+"n_faces": 2538,
+"centroid": [
+389.5689392089844,
+194.84503173828125,
+188.4679412841797
+],
+"side": "M",
+"base": "NO",
+"source_units": "voxel"
+},
+"NTct(UTct-T1)(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+447.2384338378906,
+392.7945251464844,
+638.1866455078125
+],
+"side": "L",
+"base": "NTct(UTct-T1)",
+"source_units": "voxel"
+},
+"NTct(UTct-T1)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+353.62200927734375,
+387.43841552734375,
+643.366943359375
+],
+"side": "R",
+"base": "NTct(UTct-T1)",
+"source_units": "voxel"
+},
+"Ov(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+443.6532897949219,
+467.13909912109375,
+686.9331665039062
+],
+"side": "L",
+"base": "Ov",
+"source_units": "voxel"
+},
+"Ov(R)": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+351.019287109375,
+462.27276611328125,
+688.2706909179688
+],
+"side": "R",
+"base": "Ov",
+"source_units": "voxel"
+},
+"PB": {
+"n_vertices": 1509,
+"n_faces": 2999,
+"centroid": [
+388.7687072753906,
+130.18414306640625,
+257.6463317871094
+],
+"side": "M",
+"base": "PB",
+"source_units": "voxel"
+},
+"PDMN(L)": {
+"n_vertices": 1502,
+"n_faces": 2999,
+"centroid": [
+495.4678649902344,
+401.01605224609375,
+703.4281005859375
+],
+"side": "L",
+"base": "PDMN",
+"source_units": "voxel"
+},
+"PDMN(R)": {
+"n_vertices": 1505,
+"n_faces": 2999,
+"centroid": [
+305.0640869140625,
+387.56640625,
+700.9097900390625
+],
+"side": "R",
+"base": "PDMN",
+"source_units": "voxel"
+},
+"PED(L)": {
+"n_vertices": 1507,
+"n_faces": 3000,
+"centroid": [
+484.08758544921875,
+143.09852600097656,
+207.62620544433594
+],
+"side": "L",
+"base": "PED",
+"source_units": "voxel"
+},
+"PED(R)": {
+"n_vertices": 1507,
+"n_faces": 3000,
+"centroid": [
+293.3369140625,
+152.1287384033203,
+211.14523315429688
+],
+"side": "R",
+"base": "PED",
+"source_units": "voxel"
+},
+"PLP(L)": {
+"n_vertices": 1507,
+"n_faces": 2999,
+"centroid": [
+503.5669860839844,
+172.66746520996094,
+252.64979553222656
+],
+"side": "L",
+"base": "PLP",
+"source_units": "voxel"
+},
+"PLP(R)": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+273.5973205566406,
+181.9319610595703,
+257.0097961425781
+],
+"side": "R",
+"base": "PLP",
+"source_units": "voxel"
+},
+"PrN(L)": {
+"n_vertices": 939,
+"n_faces": 1859,
+"centroid": [
+492.25689697265625,
+471.0950622558594,
+512.673828125
+],
+"side": "L",
+"base": "PrN",
+"source_units": "voxel"
+},
+"PrN(R)": {
+"n_vertices": 537,
+"n_faces": 1057,
+"centroid": [
+297.6777038574219,
+475.1949462890625,
+534.4761352539062
+],
+"side": "R",
+"base": "PrN",
+"source_units": "voxel"
+},
+"ProAN(L)": {
+"n_vertices": 1458,
+"n_faces": 2899,
+"centroid": [
+530.9405517578125,
+488.80560302734375,
+579.2146606445312
+],
+"side": "L",
+"base": "ProAN",
+"source_units": "voxel"
+},
+"ProAN(R)": {
+"n_vertices": 1505,
+"n_faces": 2999,
+"centroid": [
+274.7670593261719,
+496.0807189941406,
+579.8023681640625
+],
+"side": "R",
+"base": "ProAN",
+"source_units": "voxel"
+},
+"ProCN(L)": {
+"n_vertices": 694,
+"n_faces": 1381,
+"centroid": [
+493.238525390625,
+499.5226135253906,
+554.806396484375
+],
+"side": "L",
+"base": "ProCN",
+"source_units": "voxel"
+},
+"ProCN(R)": {
+"n_vertices": 303,
+"n_faces": 594,
+"centroid": [
+300.8895263671875,
+511.46905517578125,
+561.08447265625
+],
+"side": "R",
+"base": "ProCN",
+"source_units": "voxel"
+},
+"ProLN(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+495.50665283203125,
+524.7581176757812,
+592.1929931640625
+],
+"side": "L",
+"base": "ProLN",
+"source_units": "voxel"
+},
+"ProLN(R)": {
+"n_vertices": 1504,
+"n_faces": 2999,
+"centroid": [
+287.26202392578125,
+529.8294677734375,
+596.7756958007812
+],
+"side": "R",
+"base": "ProLN",
+"source_units": "voxel"
+},
+"PRW": {
+"n_vertices": 1505,
+"n_faces": 3000,
+"centroid": [
+389.2413330078125,
+279.88104248046875,
+153.32574462890625
+],
+"side": "M",
+"base": "PRW",
+"source_units": "voxel"
+},
+"PVLP(L)": {
+"n_vertices": 1506,
+"n_faces": 3000,
+"centroid": [
+514.9951782226562,
+199.38473510742188,
+211.28956604003906
+],
+"side": "L",
+"base": "PVLP",
+"source_units": "voxel"
+},
+"PVLP(R)": {
+"n_vertices": 1506,
+"n_faces": 3000,
+"centroid": [
+261.9646301269531,
+208.71897888183594,
+216.7333526611328
+],
+"side": "R",
+"base": "PVLP",
+"source_units": "voxel"
+},
+"SAD": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+390.37408447265625,
+288.6581115722656,
+209.583740234375
+],
+"side": "M",
+"base": "SAD",
+"source_units": "voxel"
+},
+"SCL(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+482.066650390625,
+118.08920288085938,
+212.90985107421875
+],
+"side": "L",
+"base": "SCL",
+"source_units": "voxel"
+},
+"SCL(R)": {
+"n_vertices": 1502,
+"n_faces": 2999,
+"centroid": [
+292.4341735839844,
+125.74751281738281,
+219.41700744628906
+],
+"side": "R",
+"base": "SCL",
+"source_units": "voxel"
+},
+"SIP(L)": {
+"n_vertices": 1500,
+"n_faces": 2999,
+"centroid": [
+465.86761474609375,
+99.13517761230469,
+168.0880584716797
+],
+"side": "L",
+"base": "SIP",
+"source_units": "voxel"
+},
+"SIP(R)": {
+"n_vertices": 1498,
+"n_faces": 3000,
+"centroid": [
+307.1138610839844,
+102.86976623535156,
+166.5295867919922
+],
+"side": "R",
+"base": "SIP",
+"source_units": "voxel"
+},
+"SLP(L)": {
+"n_vertices": 1506,
+"n_faces": 2999,
+"centroid": [
+507.22369384765625,
+91.46192169189453,
+206.93641662597656
+],
+"side": "L",
+"base": "SLP",
+"source_units": "voxel"
+},
+"SLP(R)": {
+"n_vertices": 1510,
+"n_faces": 2999,
+"centroid": [
+265.6716003417969,
+96.49685668945312,
+212.05227661132812
+],
+"side": "R",
+"base": "SLP",
+"source_units": "voxel"
+},
+"SMP(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+423.74761962890625,
+96.660888671875,
+184.108642578125
+],
+"side": "L",
+"base": "SMP",
+"source_units": "voxel"
+},
+"SMP(R)": {
+"n_vertices": 1503,
+"n_faces": 2999,
+"centroid": [
+346.6600036621094,
+99.27909088134766,
+183.54393005371094
+],
+"side": "R",
+"base": "SMP",
+"source_units": "voxel"
+},
+"SPS(L)": {
+"n_vertices": 1515,
+"n_faces": 3000,
+"centroid": [
+438.5805358886719,
+203.90267944335938,
+258.89691162109375
+],
+"side": "L",
+"base": "SPS",
+"source_units": "voxel"
+},
+"SPS(R)": {
+"n_vertices": 1504,
+"n_faces": 2999,
+"centroid": [
+339.20721435546875,
+210.15020751953125,
+261.7464294433594
+],
+"side": "R",
+"base": "SPS",
+"source_units": "voxel"
+},
+"VES(L)": {
+"n_vertices": 1502,
+"n_faces": 2999,
+"centroid": [
+433.39605712890625,
+237.9269561767578,
+204.69297790527344
+],
+"side": "L",
+"base": "VES",
+"source_units": "voxel"
+},
+"VES(R)": {
+"n_vertices": 1503,
+"n_faces": 2999,
+"centroid": [
+347.61297607421875,
+246.41586303710938,
+205.76150512695312
+],
+"side": "R",
+"base": "VES",
+"source_units": "voxel"
+},
+"VProN(L)": {
+"n_vertices": 1487,
+"n_faces": 2959,
+"centroid": [
+517.9915771484375,
+486.71966552734375,
+553.2146606445312
+],
+"side": "L",
+"base": "VProN",
+"source_units": "voxel"
+},
+"VProN(R)": {
+"n_vertices": 723,
+"n_faces": 1432,
+"centroid": [
+281.1073303222656,
+467.401611328125,
+553.0052490234375
+],
+"side": "R",
+"base": "VProN",
+"source_units": "voxel"
+},
+"WED(L)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+486.8429870605469,
+256.15203857421875,
+228.5864715576172
+],
+"side": "L",
+"base": "WED",
+"source_units": "voxel"
+},
+"WED(R)": {
+"n_vertices": 1502,
+"n_faces": 2999,
+"centroid": [
+295.1827392578125,
+264.9817810058594,
+233.7930908203125
+],
+"side": "R",
+"base": "WED",
+"source_units": "voxel"
+},
+"WTct(UTct-T2)(L)": {
+"n_vertices": 1501,
+"n_faces": 3000,
+"centroid": [
+450.5902404785156,
+388.1392517089844,
+721.3357543945312
+],
+"side": "L",
+"base": "WTct(UTct-T2)",
+"source_units": "voxel"
+},
+"WTct(UTct-T2)(R)": {
+"n_vertices": 1502,
+"n_faces": 3000,
+"centroid": [
+352.342041015625,
+382.7147216796875,
+722.43701171875
+],
+"side": "R",
+"base": "WTct(UTct-T2)",
+"source_units": "voxel"
+}
+}

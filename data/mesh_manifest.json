@@ -1,0 +1,337 @@
+{
+ "fly_brain_neuropil": {
+  "name": "fly_brain_neuropil",
+  "units": "um",
+  "n_vertices": 32724,
+  "n_faces": 66360,
+  "bbox_min": [
+   45.31940460205078,
+   38.14670944213867,
+   79.8173828125
+  ],
+  "bbox_max": [
+   726.9178466796875,
+   417.7846374511719,
+   341.814208984375
+  ],
+  "source": "JRCFIB2022M.ply (P. Schlegel 2022, T-bar based)"
+ },
+ "fly_brain_shell": {
+  "name": "fly_brain_shell",
+  "units": "um",
+  "n_vertices": 10112,
+  "n_faces": 20000,
+  "bbox_min": [
+   16.898099899291992,
+   31.84910011291504,
+   26.324399948120117
+  ],
+  "bbox_max": [
+   750.5900268554688,
+   441.84100341796875,
+   460.35699462890625
+  ],
+  "source": "malecns_shell.surf.rda"
+ },
+ "fly_vnc_shell": {
+  "name": "fly_vnc_shell",
+  "units": "um",
+  "n_vertices": 10521,
+  "n_faces": 20000,
+  "bbox_min": [
+   236.90899658203125,
+   307.5260009765625,
+   415.4880065917969
+  ],
+  "bbox_max": [
+   551.7239990234375,
+   574.1580200195312,
+   1076.989990234375
+  ],
+  "source": "malecnsvnc_shell.surf.rda"
+ },
+ "fly_vnc_neuropil": {
+  "name": "fly_vnc_neuropil",
+  "units": "um",
+  "n_vertices": 10593,
+  "n_faces": 20000,
+  "bbox_min": [
+   269.0559997558594,
+   313.9079895019531,
+   415.6029968261719
+  ],
+  "bbox_max": [
+   544.697021484375,
+   574.052001953125,
+   1076.3699951171875
+  ],
+  "source": "malecnsvnc.surf.rda"
+ },
+ "mouse_brain_root": {
+  "name": "mouse_brain_root",
+  "units": "um",
+  "n_vertices": 49324,
+  "n_faces": 98638,
+  "bbox_min": [
+   -16.829700469970703,
+   133.92999267578125,
+   485.72900390625
+  ],
+  "bbox_max": [
+   13192.5,
+   7564.240234375,
+   10890.599609375
+  ],
+  "source": "Allen CCF 2017 structure_meshes/997.obj"
+ },
+ "mouse_HPF": {
+  "name": "mouse_HPF",
+  "units": "um",
+  "n_vertices": 14773,
+  "n_faces": 29530,
+  "bbox_min": [
+   4073.39990234375,
+   1369.1600341796875,
+   628.3709716796875
+  ],
+  "bbox_max": [
+   10418.5,
+   6426.89013671875,
+   10758.7998046875
+  ],
+  "source": "Allen CCF 2017 1089.obj",
+  "volume_mm3": 43.23436640694158
+ },
+ "mouse_HY": {
+  "name": "mouse_HY",
+  "units": "um",
+  "n_vertices": 6217,
+  "n_faces": 12329,
+  "bbox_min": [
+   4509.85009765625,
+   3108.1201171875,
+   3157.929931640625
+  ],
+  "bbox_max": [
+   8464.419921875,
+   7428.27001953125,
+   8219.4404296875
+  ],
+  "source": "Allen CCF 2017 1097.obj",
+  "volume_mm3": 33.52783695150319
+ },
+ "mouse_MB": {
+  "name": "mouse_MB",
+  "units": "um",
+  "n_vertices": 10518,
+  "n_faces": 21040,
+  "bbox_min": [
+   7349.31005859375,
+   1007.0800170898438,
+   3155.010009765625
+  ],
+  "bbox_max": [
+   11078.5,
+   6095.66015625,
+   8231.25
+  ],
+  "source": "Allen CCF 2017 313.obj",
+  "volume_mm3": 51.57021179166712
+ },
+ "mouse_Isocortex": {
+  "name": "mouse_Isocortex",
+  "units": "um",
+  "n_vertices": 31592,
+  "n_faces": 63176,
+  "bbox_min": [
+   1803.02001953125,
+   150.88800048828125,
+   502.27398681640625
+  ],
+  "bbox_max": [
+   10373.2998046875,
+   5535.31982421875,
+   10873.2001953125
+  ],
+  "source": "Allen CCF 2017 315.obj",
+  "volume_mm3": 125.73520822656934
+ },
+ "mouse_MY": {
+  "name": "mouse_MY",
+  "units": "um",
+  "n_vertices": 10707,
+  "n_faces": 21180,
+  "bbox_min": [
+   9514.3701171875,
+   3724.719970703125,
+   2644.639892578125
+  ],
+  "bbox_max": [
+   13200.599609375,
+   7515.02978515625,
+   8725.3603515625
+  ],
+  "source": "Allen CCF 2017 354.obj",
+  "volume_mm3": 47.337110082082695
+ },
+ "mouse_STR": {
+  "name": "mouse_STR",
+  "units": "um",
+  "n_vertices": 17162,
+  "n_faces": 34330,
+  "bbox_min": [
+   3287.39990234375,
+   2509.72998046875,
+   1754.6099853515625
+  ],
+  "bbox_max": [
+   7667.72998046875,
+   7489.169921875,
+   9635.8798828125
+  ],
+  "source": "Allen CCF 2017 477.obj",
+  "volume_mm3": 107.51527695212874
+ },
+ "mouse_CB": {
+  "name": "mouse_CB",
+  "units": "um",
+  "n_vertices": 18380,
+  "n_faces": 36661,
+  "bbox_min": [
+   8839.9296875,
+   846.8460083007812,
+   1047.9100341796875
+  ],
+  "bbox_max": [
+   13197.0,
+   6638.08984375,
+   10325.900390625
+  ],
+  "source": "Allen CCF 2017 512.obj",
+  "volume_mm3": 116.45170539321678
+ },
+ "mouse_TH": {
+  "name": "mouse_TH",
+  "units": "um",
+  "n_vertices": 6593,
+  "n_faces": 13170,
+  "bbox_min": [
+   5513.25,
+   2620.889892578125,
+   2750.320068359375
+  ],
+  "bbox_max": [
+   9024.009765625,
+   5614.64013671875,
+   8619.009765625
+  ],
+  "source": "Allen CCF 2017 549.obj",
+  "volume_mm3": 21.01090744481185
+ },
+ "mouse_OLF": {
+  "name": "mouse_OLF",
+  "units": "um",
+  "n_vertices": 19330,
+  "n_faces": 38596,
+  "bbox_min": [
+   1.4139399528503418,
+   2554.72998046875,
+   970.8200073242188
+  ],
+  "bbox_max": [
+   9004.3203125,
+   7545.27978515625,
+   10408.5
+  ],
+  "source": "Allen CCF 2017 698.obj",
+  "volume_mm3": 160.74019677568862
+ },
+ "mouse_CTXsp": {
+  "name": "mouse_CTXsp",
+  "units": "um",
+  "n_vertices": 7292,
+  "n_faces": 14584,
+  "bbox_min": [
+   3223.77001953125,
+   3934.719970703125,
+   1504.3399658203125
+  ],
+  "bbox_max": [
+   8890.5703125,
+   6983.509765625,
+   9874.099609375
+  ],
+  "source": "Allen CCF 2017 703.obj",
+  "volume_mm3": 9.487590985509755
+ },
+ "mouse_P": {
+  "name": "mouse_P",
+  "units": "um",
+  "n_vertices": 7243,
+  "n_faces": 14298,
+  "bbox_min": [
+   8533.3798828125,
+   3499.699951171875,
+   3003.47998046875
+  ],
+  "bbox_max": [
+   11018.5,
+   7202.85986328125,
+   8375.6904296875
+  ],
+  "source": "Allen CCF 2017 771.obj",
+  "volume_mm3": 26.091740713975355
+ },
+ "mouse_PAL": {
+  "name": "mouse_PAL",
+  "units": "um",
+  "n_vertices": 8516,
+  "n_faces": 17038,
+  "bbox_min": [
+   3511.780029296875,
+   2526.7900390625,
+   2486.669921875
+  ],
+  "bbox_max": [
+   7148.35009765625,
+   7136.9599609375,
+   8878.509765625
+  ],
+  "source": "Allen CCF 2017 803.obj",
+  "volume_mm3": 40.93941219012615
+ },
+ "human_pial_left": {
+  "name": "human_pial_left",
+  "units": "um",
+  "n_vertices": 10242,
+  "n_faces": 20480,
+  "bbox_min": [
+   -68788.8046875,
+   -104692.03125,
+   -48324.43359375
+  ],
+  "bbox_max": [
+   1221.5628662109375,
+   68947.375,
+   78123.9921875
+  ],
+  "source": "fsaverage5 pial (nilearn bundle), RAS mm x1000"
+ },
+ "human_pial_right": {
+  "name": "human_pial_right",
+  "units": "um",
+  "n_vertices": 10242,
+  "n_faces": 20480,
+  "bbox_min": [
+   -124.602783203125,
+   -104431.0703125,
+   -48392.25390625
+  ],
+  "bbox_max": [
+   69846.4375,
+   69156.1015625,
+   79210.953125
+  ],
+  "source": "fsaverage5 pial (nilearn bundle), RAS mm x1000"
+ }
+}

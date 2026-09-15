@@ -1,0 +1,160 @@
+<meta charset="utf-8">
+<title>NeuroScale</title>
+<meta name="description" content="从果蝇雄性中枢神经系统连接组出发，推演小鼠、人类与超哺乳层级智能网络的 3D 模型与图论指标">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#0b0f17; --bg2:#121826; --bg3:#182131; --bg4:#1f2a3d; --line:#243044; --line2:#2f3d55;
+  --ink:#e8ecf4; --ink2:#9aa6bd; --ink3:#66738c; --accent:#f5b942; --accent2:#6ec6ff; --good:#7ed491; --warn:#fb923c;
+  --font-ui:"Noto Sans SC",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;
+  --font-display:"Noto Serif SC","Songti SC","SimSun",serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+html,body{background:var(--bg);color:var(--ink)}
+body{margin:0;font:14px/1.55 var(--font-ui);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.top{height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);background:var(--bg2);gap:16px}
+.brand{display:flex;align-items:baseline;gap:12px;min-width:0}
+.brand-name{font:700 20px/1 var(--font-display);letter-spacing:.02em;color:var(--accent)}
+.brand-sub{font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-meta{font:12px var(--font-mono);color:var(--ink3);white-space:nowrap}
+.app{display:grid;grid-template-columns:232px minmax(0,1fr) 410px;height:calc(100vh - 52px);min-height:520px}
+.rail{border-right:1px solid var(--line);background:var(--bg2);overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.rail h3,.panel h3,.hud h3{margin:0 0 6px;font:500 11px var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.tier{display:block;width:100%;text-align:left;background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:10px 12px 9px;color:var(--ink);cursor:pointer;transition:border-color .15s}
+.tier:hover{border-color:var(--line2)}
+.tier.on{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.tier .id{font:500 11px var(--font-mono);color:var(--ink2);letter-spacing:.1em}
+.tier .nm{font:700 15px/1.35 var(--font-display);margin:2px 0 1px}
+.tier .n{font:12px var(--font-mono);color:var(--ink2);font-variant-numeric:tabular-nums}
+.tier .kind{display:inline-block;margin-top:5px;font-size:11px;padding:1px 6px;border-radius:3px;background:var(--bg4);color:var(--ink2)}
+.tier.on .kind{background:rgba(245,185,66,.15);color:var(--accent)}
+.scale-strip{margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.scale-strip svg{width:100%;height:auto;display:block}
+.stage{position:relative;background:var(--bg);overflow:hidden}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hud{position:absolute;pointer-events:none;max-width:52%}
+.hud > *{pointer-events:auto}
+.hud-tl{left:14px;top:12px}
+.hud-tr{right:14px;top:12px;text-align:right}
+.hud-bl{left:14px;bottom:12px}
+.hud-br{right:14px;bottom:12px;text-align:right}
+.hud-title{font:700 22px/1.2 var(--font-display);text-wrap:balance}
+.hud-sub{font-size:12px;color:var(--ink2);margin-top:3px}
+.hud-msg{display:inline-block;margin-top:8px;font-size:12px;color:var(--warn);background:rgba(11,15,23,.75);padding:4px 8px;border-radius:4px}
+.ctl{display:inline-flex;flex-direction:column;gap:6px;background:rgba(18,24,38,.82);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:6px;padding:10px 12px;text-align:left;font-size:12px}
+.ctl label{display:flex;align-items:center;gap:8px;cursor:pointer;white-space:nowrap}
+.ctl input[type=range]{width:110px;accent-color:var(--accent)}
+.ctl input[type=checkbox]{accent-color:var(--accent);margin:0}
+.ctl .row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ctl button{background:var(--bg4);border:1px solid var(--line2);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:12px}
+.ctl button:hover{border-color:var(--accent2)}
+.legend{background:rgba(18,24,38,.82);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-size:12px;max-height:46vh;overflow:auto}
+.legend table{border-collapse:collapse}
+.legend td{padding:2px 6px 2px 0;vertical-align:middle;white-space:nowrap}
+.legend td.num{font:11px var(--font-mono);text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.legend label{cursor:pointer;display:flex;align-items:center;gap:4px}
+.legend input{accent-color:var(--accent);margin:0}
+.legend .off{opacity:.45}
+.legend .sys{color:var(--ink3);font-size:11px;padding-top:6px}
+.frame{font:11px/1.5 var(--font-mono);color:var(--ink3);background:rgba(11,15,23,.6);padding:4px 8px;border-radius:4px;display:inline-block;text-align:right}
+.loading{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font:12px var(--font-mono);color:var(--ink2);background:rgba(18,24,38,.9);padding:8px 14px;border-radius:6px;border:1px solid var(--line)}
+.loading[hidden]{display:none}
+.panel{border-left:1px solid var(--line);background:var(--bg2);display:flex;flex-direction:column;min-height:0}
+.tabs{display:flex;border-bottom:1px solid var(--line);flex:none}
+.tabs button{flex:1;background:none;border:0;border-bottom:2px solid transparent;padding:10px 4px;cursor:pointer;color:var(--ink2);font-weight:500}
+.tabs button.on{color:var(--accent);border-bottom-color:var(--accent)}
+.tabpanes{overflow:auto;padding:14px 16px 24px;flex:1;min-height:0}
+.pane{display:none}.pane.on{display:block}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tile{background:var(--bg3);border-radius:4px;padding:9px 10px}
+.tile .k{font:500 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.tile .v{font:500 19px/1.25 var(--font-mono);margin-top:2px;font-variant-numeric:tabular-nums}
+.tile .s{font-size:11px;color:var(--ink2)}
+.tile.est .v{color:var(--ink)}
+.badge{display:inline-block;font-size:10px;padding:0 5px;border-radius:3px;background:var(--bg4);color:var(--ink2);vertical-align:middle;margin-left:4px}
+.badge.m{background:rgba(126,212,145,.15);color:var(--good)}
+.badge.e{background:rgba(251,146,60,.15);color:var(--warn)}
+table.stats{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin-bottom:14px}
+table.stats th{font:500 11px var(--font-mono);letter-spacing:.06em;color:var(--ink3);text-align:right;padding:4px 0 6px;border-bottom:1px solid var(--line2);font-weight:500}
+table.stats th:first-child{text-align:left}
+table.stats td{padding:5px 0;border-bottom:1px solid var(--line);font-size:13px}
+table.stats td.v{font:13px var(--font-mono);text-align:right;padding-left:10px;white-space:nowrap}
+table.stats td.v.hi{color:var(--accent)}
+.note{font-size:12px;color:var(--ink2);margin:6px 0 12px}
+.notes{padding-left:18px;margin:0 0 14px}
+.notes li{margin-bottom:10px;max-width:62ch}
+.chart{margin:6px 0 18px}
+.chart h4{margin:0 0 4px;font-size:13px;font-weight:500}
+.chart .cap{font-size:11px;color:var(--ink2);margin:0 0 6px}
+.chart svg{width:100%;height:auto;display:block}
+.chart .lg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--ink2);margin-top:4px}
+.chart .lg span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:5px;vertical-align:-1px}
+.tip{position:fixed;pointer-events:none;background:var(--bg4);border:1px solid var(--line2);border-radius:4px;padding:4px 8px;font:11px var(--font-mono);color:var(--ink);z-index:9;white-space:nowrap}
+.tip[hidden]{display:none}
+.method p{max-width:62ch;margin:0 0 10px}
+.method h4{margin:14px 0 4px;font-size:13px}
+.method code{font:12px var(--font-mono);background:var(--bg3);padding:1px 4px;border-radius:3px}
+.src{font-size:11px;color:var(--ink3);margin-top:16px;line-height:1.6}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:1000px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto 58vh auto;height:auto}
+  .rail{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);padding:10px}
+  .rail .tier{min-width:170px}.scale-strip{display:none}
+  .panel{border-left:0;border-top:1px solid var(--line)}
+  .hud{max-width:60%}.legend{max-height:30vh}
+  .brand-sub{display:none}
+}
+</style>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+
+<header class="top">
+  <div class="brand"><span class="brand-name">NeuroScale</span><span class="brand-sub">从果蝇连接组到超哺乳智能网络 · 3D 推演模型</span></div>
+  <div class="top-meta" id="topMeta">male-cns:v1.0 · neuprint</div>
+</header>
+<div class="app">
+  <nav class="rail" id="rail" aria-label="层级"></nav>
+  <section class="stage" id="stage">
+    <canvas id="gl" aria-label="三维网络视图"></canvas>
+    <div class="hud hud-tl" id="hudTitle"></div>
+    <div class="hud hud-tr" id="hudCtl"></div>
+    <div class="hud hud-bl" id="hudLegend"></div>
+    <div class="hud hud-br" id="hudFrame"></div>
+    <div class="loading" id="loading">载入数据…</div>
+  </section>
+  <aside class="panel">
+    <div class="tabs" id="tabs" role="tablist">
+      <button data-tab="stats" class="on" role="tab">指标</button>
+      <button data-tab="dist" role="tab">分布</button>
+      <button data-tab="notes" role="tab">推演</button>
+      <button data-tab="method" role="tab">方法</button>
+    </div>
+    <div class="tabpanes">
+      <div class="pane on" id="pane-stats"></div>
+      <div class="pane" id="pane-dist"></div>
+      <div class="pane" id="pane-notes"></div>
+      <div class="pane method" id="pane-method">
+        <h4>推演问题</h4>
+        <p>以雄性果蝇全中枢神经系统连接组（每一个突触都已知）为起点，什么样的网络结构才能到达小鼠、人类乃至更高的智能层级？智能不是神经元数量的单调函数，它由规模、架构基序、布线统计、可塑性与物理约束共同决定。</p>
+        <h4>数据</h4>
+        <p>T0 的全部数字来自 neuprint 公开数据集 <code>male-cns:v1.0</code>（Berg 等 2026，Cell）：165,122 个已追踪神经元、25.9 M 条有向连接、1.25 亿突触、11,751 个细胞类型、144 个 ROI。三维视图使用真实胞体坐标与 ROI 网格。</p>
+        <h4>同规模对照实验</h4>
+        <p>每个层级都生成一个与果蝇胞体子图 <em>相同节点数、相同平均度</em> 的网络，只改变架构：模块划分与神经元比例（按解剖学计数）、模块间投射矩阵（哺乳类基本回路图）、指数距离规则的衰减常数 λ（随脑尺寸变化）、按角色分配的对数正态度分布。连接由 GPU 上的 Gumbel-top-k 无放回采样生成：<code>P(i→j) ∝ W[m<sub>i</sub>, m<sub>j</sub>] · exp(−λ<sub>j</sub> d<sub>ij</sub>)</code>。这样得到的差异只反映架构，不反映规模。v2 起按果蝇实测互惠率 0.29 为每个层级加入反向连接（先按 1/(1+f) 缩减出度，再为随机 f = r/(2−r) 的边补反向边），使双向连接的比例与真实数据一致。</p>
+        <h4>几何</h4>
+        <p>T1 在 Allen CCF 2017 的 12 个主要结构网格内按体积采样；T2 在 fsaverage5 软脑膜面向内 2.5 mm 的皮层带上采样，皮层下核团用解剖坐标椭球；T3 是推演设计：×1.25 的哺乳类蓝图加上内缩 7 mm 的第二层皮层、16 个核团式联合区、三倍丘脑枢纽和 3.6 : 1 的小脑类比。</p>
+        <h4>真实尺度的估算</h4>
+        <p>哺乳类层级的连接数与突触数是估算：按角色设定每神经元突触数（皮层 7,000、纹状体 10,000、小脑 450……），每对连接 2.5 个突触；算力等价按平均发放 1 Hz、每次突触事件 10 FLOP 折算，并与本机 RTX 5060 Ti（约 2×10¹³ FLOP/s）比较。</p>
+        <div class="src">来源：Berg et al. 2026 Cell（male CNS）；Dorkenwald et al. 2024 Nature（FlyWire）；Lin et al. 2024 Nature（果蝇网络统计）；Herculano-Houzel 2006/2009/2010（神经元计数与小脑比例）；MICrONS Consortium 2025 Nature；Ercsey-Ravasz et al. 2013、Horvát et al. 2016（指数距离规则）；Olkowicz et al. 2016 PNAS（鸟类神经元密度）；Pakkenberg et al. 2003（人类新皮层突触）；Allen CCF 2017；fsaverage5。</div>
+      </div>
+    </div>
+  </aside>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script type="module" src="app.js"></script>
