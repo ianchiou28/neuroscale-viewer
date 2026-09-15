@@ -1,0 +1,344 @@
+<meta charset="utf-8">
+<title>NeuroScale 推演报告</title>
+<meta name="description" content="从果蝇雄性中枢神经系统连接组推演哺乳类以上智能网络的完整报告：实测基线、跨物种尺度律、同规模对照实验、规模尺度律与超哺乳设计结论">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+<style>
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --surface2:#e9edf3; --line:#d6dde6; --line2:#c2ccd9;
+  --ink:#16202c; --ink2:#4e5b6e; --ink3:#7a8699; --accent:#b8791a; --accent-soft:rgba(184,121,26,.12); --accent2:#2f6fae;
+  --t0:#b8791a; --t1:#2e8b57; --t2:#2f6fae; --t3:#7c5cbf; --ctrl:#9a7a3a; --fb:#a08ad6;
+  --font-ui:"Noto Sans SC",system-ui,"PingFang SC","Microsoft YaHei",sans-serif;
+  --font-display:"Noto Serif SC","Songti SC","SimSun",serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Consolas,"Courier New",monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b0f17; --surface:#121826; --surface2:#182131; --line:#243044; --line2:#2f3d55;
+    --ink:#e8ecf4; --ink2:#9aa6bd; --ink3:#66738c; --accent:#f5b942; --accent-soft:rgba(245,185,66,.14); --accent2:#6ec6ff;
+    --t0:#f5b942; --t1:#7ed491; --t2:#6ec6ff; --t3:#c4b5fd; --ctrl:#c98a1a; --fb:#d9c4ff;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b0f17; --surface:#121826; --surface2:#182131; --line:#243044; --line2:#2f3d55;
+  --ink:#e8ecf4; --ink2:#9aa6bd; --ink3:#66738c; --accent:#f5b942; --accent-soft:rgba(245,185,66,.14); --accent2:#6ec6ff;
+  --t0:#f5b942; --t1:#7ed491; --t2:#6ec6ff; --t3:#c4b5fd; --ctrl:#c98a1a; --fb:#d9c4ff;
+}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 var(--font-ui);-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:var(--accent2);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--accent2)}
+a:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+.wrap{display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;max-width:1160px;margin:0 auto;padding:36px 28px 80px}
+.toc{position:sticky;top:24px;align-self:start;font-size:13px;line-height:1.6}
+.toc h4{margin:0 0 8px;font:500 11px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.toc a{display:block;color:var(--ink2);padding:3px 0;border:0}
+.toc a:hover{color:var(--accent)}
+.toc .n{font:500 11px var(--font-mono);color:var(--ink3);margin-right:6px}
+main{min-width:0}
+.eyebrow{font:500 12px var(--font-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+h1{font:700 40px/1.2 var(--font-display);margin:0 0 14px;text-wrap:balance;letter-spacing:.01em}
+.lede{font-size:18px;line-height:1.7;color:var(--ink2);max-width:66ch;margin:0 0 22px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font:12px var(--font-mono);color:var(--ink3);padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:36px}
+h2{font:700 26px/1.3 var(--font-display);margin:52px 0 14px;text-wrap:balance;padding-top:8px}
+h2 .n{font:500 14px var(--font-mono);color:var(--accent);margin-right:10px;vertical-align:middle}
+h3{font:700 17px/1.4 var(--font-ui);margin:28px 0 8px}
+p{max-width:70ch;margin:0 0 14px}
+ul,ol{max-width:70ch;padding-left:22px;margin:0 0 14px}
+li{margin-bottom:6px}
+strong{font-weight:700}
+.answer{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:18px 22px;margin:0 0 28px;max-width:76ch}
+.answer h3{margin:0 0 8px;font:700 15px var(--font-ui);color:var(--accent)}
+.answer ol{margin:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:18px 0 22px;max-width:900px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+.tile .k{font:500 11px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.tile .v{font:500 24px/1.2 var(--font-mono);margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.tile .s{font-size:12px;color:var(--ink2)}
+.tblwrap{overflow-x:auto;margin:14px 0 22px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{font:500 11px var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);text-align:right;padding:10px 12px;border-bottom:1px solid var(--line2);white-space:nowrap;background:var(--surface2)}
+th:first-child,td:first-child{text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+td.num{font-family:var(--font-mono)}
+tr:last-child td{border-bottom:0}
+td.hi{color:var(--accent);font-weight:500}
+.cap{font-size:12.5px;color:var(--ink2);margin:-14px 0 22px;max-width:76ch}
+figure{margin:20px 0 26px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px 12px;max-width:860px}
+figure h4{margin:0 0 2px;font:700 14px var(--font-ui)}
+figure .fc{font-size:12.5px;color:var(--ink2);margin:0 0 10px}
+figure svg{width:100%;height:auto;display:block}
+.lg{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:12px;color:var(--ink2);margin-top:6px}
+.lg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--c);margin-right:6px;vertical-align:-1px}
+.heat td{padding:6px 8px;font-family:var(--font-mono);font-size:12.5px}
+.heat td.rowh{font-family:var(--font-ui);text-align:left;font-weight:500}
+.callout{background:var(--accent-soft);border-radius:6px;padding:14px 18px;margin:18px 0 22px;max-width:76ch}
+.callout p:last-child{margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 16px}
+.card h4{margin:0 0 6px;font:700 14px var(--font-ui)}
+.card p,.card ul{font-size:13.5px;margin-bottom:6px}
+.small{font-size:13px;color:var(--ink2)}
+.src{font-size:12.5px;color:var(--ink3);line-height:1.7;max-width:80ch}
+code{font:13px var(--font-mono);background:var(--surface2);padding:1px 5px;border-radius:3px}
+.btn{display:inline-block;background:var(--accent);color:#0b0f17;font-weight:700;padding:10px 16px;border-radius:6px;border:0;margin:6px 0 18px}
+.btn:hover{border:0;filter:brightness(1.06)}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:0;padding:24px 16px 60px}.toc{position:static;margin-bottom:22px;border-bottom:1px solid var(--line);padding-bottom:12px}.two{grid-template-columns:1fr}h1{font-size:30px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="目录">
+  <h4>目录</h4>
+  <a href="#s0"><span class="n">00</span>一句话答案</a>
+  <a href="#s1"><span class="n">01</span>基线：果蝇雄性 CNS 实测</a>
+  <a href="#s2"><span class="n">02</span>跨物种尺度律</a>
+  <a href="#s3"><span class="n">03</span>昆虫到哺乳类的跃迁</a>
+  <a href="#s4"><span class="n">04</span>同规模对照实验</a>
+  <a href="#s5"><span class="n">05</span>规模尺度实验</a>
+  <a href="#s6"><span class="n">06</span>T3 超哺乳设计</a>
+  <a href="#s7"><span class="n">07</span>算力等价</a>
+  <a href="#s8"><span class="n">08</span>损毁实验（神经外科视角）</a>
+  <a href="#s8b"><span class="n">09</span>结论与局限</a>
+  <a href="#s9"><span class="n">附</span>方法与来源</a>
+</nav>
+<main>
+<p class="eyebrow">NeuroScale · 自主推演项目 · 2026-09-15</p>
+<h1>从果蝇连接组到"哺乳类以上"的智能网络</h1>
+<p class="lede">以雄性果蝇全中枢神经系统连接组（每一个突触都已知）为起点，用图论、解剖计数与 GPU 生成模型推演小鼠、人类乃至更高层级的智能网络需要什么结构。这是一份神经外科、生物学与计算机科学交叉视角的推演报告。</p>
+<div class="meta"><span>数据 male-cns:v1.0（neuprint）</span><span>算力 RTX 5060 Ti · Ryzen 7 9700X</span><span>模型 4 层级 + 2 个修正设计 × 全脑/前脑 · 3 组实验</span><span>作者 Claude（自主推演）</span></div>
+
+<h2 id="s0"><span class="n">00</span>一句话答案</h2>
+<div class="answer">
+<h3>哺乳类以上的智能网络 = 数千个"果蝇规模"的局域单元，由一个极少数节点承担的枢纽层缝合，而其功能结构主要由可塑性写入，而非由架构预定。</h3>
+<ol>
+<li><strong>规模决定容量，不决定效率。</strong> 固定平均度时，路径长度只随 ln N 缓慢增长（每增 e 倍 +0.1 步），但局域三角形按 N<sup>−0.64</sup> 稀释。真实脑靠"有效邻域"维持聚类：一个皮层区恰是 10<sup>5</sup> 量级的果蝇规模单元。</li>
+<li><strong>果蝇把布线写进基因组，哺乳类以上必须写进经验。</strong> 模块 + 距离规则只能复现果蝇聚类的四分之一（0.019–0.036 对 0.114）；差额只能由类型特异布线（果蝇）或活动依赖的可塑性（哺乳类）补足。</li>
+<li><strong>枢纽层是跨物种的必需品。</strong> 果蝇的下行/上行神经元度是均值的 3 倍，顶层 1% 节点间密度是全网的 100 倍；哺乳类的丘脑在模型里入度是均值的 40 倍。T3 设计把丘脑枢纽扩容 3 倍。</li>
+<li><strong>枢纽既是效率也是脆弱性。</strong> 损毁实验里，随机切除 20% 神经元几乎无损（效率保留 97–99%），切除 5% 枢纽则效率降到 77%（果蝇）、66%（人类级）、50%（超哺乳级 T3）。两轮修正表明：分散丘脑无效（51%），给最大模块（小脑）增加并行入口有效（63%）——冗余要放在通往最大模块的入口。</li>
+<li><strong>算力不是瓶颈。</strong> 4.8×10<sup>11</sup> 神经元、10<sup>15</sup> 突触的 T3 设计在 1 Hz 平均发放率下约需 10<sup>16</sup> FLOP/s，相当于数百块消费级 GPU。瓶颈是布线规则与学习规则。</li>
+</ol>
+</div>
+<a class="btn" href="../">打开 3D 交互模型 →</a>
+
+<h2 id="s1"><span class="n">01</span>基线：果蝇雄性中枢神经系统实测</h2>
+<p>所有 T0 数字来自 2026-09-15 通过 Cypher 全量抓取的 neuprint 公开数据集 <code>male-cns:v1.0</code>（Berg 等，Cell 2026）。数据库共 176,422 个 Neuron 节点、25,862,574 条有向边、125,024,863 个突触；本报告的分析集合取 <code>status = Traced</code> 的 165,122 个神经元（与论文报告的 166,483 同量级）。</p>
+<div class="tiles">
+<div class="tile"><div class="k">已追踪神经元</div><div class="v">165,122</div><div class="s">11,751 个细胞类型</div></div>
+<div class="tile"><div class="k">有向连接</div><div class="v">2.56×10⁷</div><div class="s">平均 155 个下游伙伴</div></div>
+<div class="tile"><div class="k">突触</div><div class="v">1.24×10⁸</div><div class="s">每对连接 4.9 个</div></div>
+<div class="tile"><div class="k">平均有向路径</div><div class="v">3.24 步</div><div class="s">中位数 3 步</div></div>
+<div class="tile"><div class="k">聚类系数</div><div class="v">0.113</div><div class="s">w ≥ 5 时 0.063</div></div>
+<div class="tile"><div class="k">小世界指数</div><div class="v">51</div><div class="s">w ≥ 5 时 115</div></div>
+</div>
+<p>三个决定性的观察：</p>
+<ul>
+<li><strong>一半神经元在视叶。</strong> 视叶内在神经元 89,403 个（51%），贡献全网 42.5% 的边，但 81% 的输出留在视叶内部，几乎不接收反馈：它是一个封闭的预处理器。真正做灵活联想的中央脑内在神经元只有 32,164 个，其输出 90.6% 留在中央脑。</li>
+<li><strong>类型化而非群体化。</strong> 11,751 个类型，每型中位数只有 3 个神经元；最大的类型全是约 1,800 个的视叶柱状细胞（Tm3、T3、L1……），正好对应两只眼的视柱数。行为主要由进化预编程的精确布线决定。</li>
+<li><strong>下行系统不是单向指令线。</strong> 1,314 个下行神经元的度是均值的 3 倍，其输出只有 40% 进入腹神经索，29% 反馈回中央脑、12% 到其他下行神经元。这是一个带再入连接的决策层，与哺乳类皮质脊髓/脑干下行系统的侧支反馈结构相同。</li>
+</ul>
+<h3>超类间的投射矩阵（每行：该来源的边流向何处，%）</h3>
+<div class="tblwrap"><table class="heat" id="heat"></table></div>
+<p class="cap">72.7% 的边在同一超类内部。OL 视叶、CB 中央脑、VNC 腹神经索、VP 视觉投射、SENS 感觉、AN 上行、DN 下行、MOTOR 运动。</p>
+<h3>胞体距离与连接概率</h3>
+<p>比较 8,000 个随机源神经元的真实下游伙伴与随机神经元对的胞体距离分布：目标中位距离 129 µm，随机对 368 µm；在 25–700 µm 区间拟合指数距离规则 p(d) ∝ exp(−λd)，得到 <strong>λ = 8.1 /mm，衰减长度 123 µm</strong>。猕猴皮层区间 λ ≈ 0.19 /mm（Ercsey-Ravasz 等 2013），小鼠约 0.78 /mm（Horvát 等 2016）：衰减长度约为脑长的 6–12%，是跨越三个数量级的经验规律，本项目据此为各层级设定 λ。</p>
+
+<h2 id="s2"><span class="n">02</span>跨物种尺度律</h2>
+<div class="tblwrap"><table>
+<tr><th>物种</th><th>总神经元</th><th>皮层 / 端脑</th><th>小脑</th><th>每神经元突触</th><th>来源</th></tr>
+<tr><td>果蝇（雄 CNS）</td><td class="num">1.65×10⁵</td><td class="num">中央脑内在 3.2×10⁴</td><td class="num">—（功能类比：蘑菇体）</td><td class="num">~750</td><td>Berg et al. 2026</td></tr>
+<tr><td>小鼠</td><td class="num">7.1×10⁷</td><td class="num">1.37×10⁷</td><td class="num">4.2×10⁷</td><td class="num">皮层 ~8,200</td><td>Herculano-Houzel 2006；Schüz &amp; Palm 1989</td></tr>
+<tr><td>人类</td><td class="num">8.6×10¹⁰</td><td class="num">1.6×10¹⁰</td><td class="num">6.9×10¹⁰</td><td class="num">新皮层 ~7,000（总量 1.5×10¹⁴）</td><td>Herculano-Houzel 2009；Pakkenberg 2003</td></tr>
+</table></div>
+<ul>
+<li>小脑与皮层的神经元比在哺乳类中近似恒定（约 3.6–4 : 1）；灵长类的神经元密度不随脑体积下降；鸟类（鸦科、鹦鹉）端脑密度约为灵长类的 2 倍（Olkowicz 等 2016）。</li>
+<li>MICrONS：约 1 mm³ 小鼠视皮层含约 1.2×10⁵ 神经元、5.23×10⁸ 突触——一个立方毫米皮层的神经元数与整只果蝇相当。</li>
+<li>白质体积 ∝ 灰质体积<sup>1.23</sup>（Zhang &amp; Sejnowski 2000）：长程布线成本超线性增长，这是 T3 设计采用鸟类式高密度核团的直接理由。</li>
+</ul>
+
+<h2 id="s3"><span class="n">03</span>昆虫到哺乳类的跃迁到底是什么</h2>
+<div class="two">
+<div class="card"><h4>果蝇已经拥有的、被保守下来的基序</h4><ul>
+<li>蘑菇体 Kenyon 细胞的稀疏扩展编码 + 多巴胺调制输出 ↔ 小脑颗粒细胞 / 海马齿状回 + VTA→纹状体</li>
+<li>中央复合体环吸引子 ↔ 头方向系统</li>
+<li>视叶视柱（约 800 柱/眼）↔ V1 超柱</li>
+<li>下行神经元瓶颈 ↔ 皮质脊髓/脑干下行通路</li>
+<li>腹神经索中枢模式发生器 ↔ 脊髓 CPG</li></ul></div>
+<div class="card"><h4>哺乳类新增的东西</h4><ul>
+<li>六层新皮层：可复制的规范微回路，用长程皮层-皮层连接组织成层级（小鼠约 40 区，人类每半球约 180 区）</li>
+<li>丘脑-皮层环路：路由、注意、同步——全局工作空间的硬件</li>
+<li>海马：索引式情景记忆，模式分离/完成</li>
+<li>基底节：动作选择的强化学习门控</li>
+<li>大规模小脑：前向模型，神经元数按恒定比例跟随皮层</li>
+<li>髓鞘化长程轴突：体积扩大 1000 倍仍保持毫秒级同步</li></ul></div>
+</div>
+<div class="callout"><p><strong>核心判断：类型化 vs 群体化。</strong> 果蝇 11,751 类型 / 1.65×10⁵ 神经元，每型约 14 个，行为由进化预编程的精确布线决定；小鼠皮层数百个转录组类型 / 1.4×10⁷ 神经元，每型 10⁴ 到 10⁵ 个，智能来自同一微回路的海量复制加经验塑形。基因组能规定约一万种身份及其配线（Zador 2019 的"基因组瓶颈"），却不可能逐个规定 10⁷–10¹⁰ 个神经元。<strong>迈向哺乳类以上，需要的不是更多类型，而是更多可塑的模块副本、更深的层级组织，以及把副本缝合起来的枢纽层。</strong></p></div>
+
+<h2 id="s4"><span class="n">04</span>同规模对照实验</h2>
+<p>为了把"架构"与"规模"的效应分开，每个层级都在 GPU 上生成一个与果蝇有胞体子图 <em>相同节点数（140,024）、相同平均度（166）</em> 的网络，只改变架构：模块划分与神经元比例（解剖计数）、模块间投射矩阵（哺乳类基本回路图）、指数距离规则的 λ（随脑尺寸缩放）、按角色分配的对数正态出度。连接由 Gumbel-top-k 无放回采样生成：P(i→j) ∝ W[m<sub>i</sub>, m<sub>j</sub>] · exp(−λ<sub>j</sub> d<sub>ij</sub>)。位置取自真实解剖：T1 在 Allen CCF 的 12 个结构网格内采样，T2 在 fsaverage5 软脑膜面向内 2.5 mm 的皮层带与解剖椭球中采样，T3 是推演设计的几何。</p>
+<div class="tblwrap"><table id="cmp"></table></div>
+<p class="cap">v1（无互惠率参数）全脑与前脑模型。"T0 生成对照"用真实胞体位置、超类投射矩阵与拟合的 λ 生成，检验生成器能复现哪些真实结构。</p>
+<div class="tblwrap"><table id="cmp2"></table></div>
+<p class="cap">v2：同样的架构，加入果蝇实测互惠率 0.29 后重新生成。3D 应用当前展示的是 v2 网络。</p>
+<figure><h4>跨层级对比</h4><p class="fc">同节点数、同平均度下，各架构的四项指标。</p><div id="figCmp"></div></figure>
+<h3>解读</h3>
+<ul>
+<li><strong>路径长度由架构决定，与规模无关。</strong> 所有模型的无向路径 2.6–2.9 步，有向路径 2.9–3.1 步；模块化 + 距离核 + 枢纽层足以给出果蝇水平的"三步可达"。T2/T3 全脑的有向路径变长（4.5、5.0 步）是因为占 80% 节点的小脑模块在固定平均度下只能局域连接；真实小脑的度分布（浦肯野细胞 15 万个输入）不受此限。</li>
+<li><strong>聚类是结构给不出的。</strong> 果蝇实测 0.114；果蝇的模块 + 距离对照 0.019；三个哺乳类前脑模型 0.025–0.036。T2 全脑的 0.133 看似追平，实则几乎全部来自小脑模块的极端局域布线（衰减长度 1.25 mm 对 100 mm 的结构）。哺乳类蓝图自身产生的三角形密度只有果蝇的四分之一，差额必须由可塑性补足。</li>
+<li><strong>互惠率同样如此，但它守护的是另一样东西。</strong> 果蝇 0.294，v1 生成模型只有 0.01–0.19。v2 生成器把互惠率作为显式参数（0.29）重新生成了全部层级：C 略降（0.133 → 0.122、0.091 → 0.086），但小脑主导的 T2/T3 全脑有向路径从 4.46 → 3.06 步、5.04 → 3.04 步，所有网络成为单一强连通分量。双向连接维持的是<strong>有向可达性</strong>而非局域聚类——这是果蝇在只有 155 个平均伙伴的条件下仍能三步可达的原因之一，也是皮层-丘脑环路的图论价值所在。</li>
+<li><strong>枢纽设计有效。</strong> 前 1% 节点承载的边占比 T1 0.12 → T2 0.17 → T3 0.19；T2 模型里丘脑仅 81 个采样节点，平均入度 6,635（均值的 40 倍）。代价是 T3 的解剖模块度降到 0.32：更强的整合意味着更弱的分隔，这是"全局工作空间"的图论代价。</li>
+</ul>
+
+<h2 id="s5"><span class="n">05</span>规模尺度实验</h2>
+<p>固定小鼠架构与 ⟨k⟩ = 166，把 N 从 2 万变到 40 万（边数 3.3×10⁶ 到 6.6×10⁷，全部在 RTX 5060 Ti 上生成、在 CPU 上统计）：</p>
+<figure><h4>聚类系数与路径长度随 N 的变化</h4><p class="fc">点：生成网络实测；虚线：拟合并外推。C ∝ N<sup>−0.64</sup>；L 有向 = 1.97 + 0.101·ln N；S ∝ N<sup>0.37</sup>；模块度几乎不变。</p><div id="figScale"></div></figure>
+<div class="tblwrap"><table>
+<tr><th>外推目标（固定 ⟨k⟩ = 166）</th><th>N</th><th>C 全局</th><th>L 有向</th><th>S</th></tr>
+<tr><td>T0 果蝇</td><td class="num">1.65×10⁵</td><td class="num">0.050</td><td class="num">3.18</td><td class="num">19</td></tr>
+<tr><td>T1 小鼠</td><td class="num">7.1×10⁷</td><td class="num">0.0011</td><td class="num">3.79</td><td class="num">176</td></tr>
+<tr><td>T2 人类</td><td class="num">8.6×10¹⁰</td><td class="num">1×10⁻⁵</td><td class="num">4.51</td><td class="num">2,409</td></tr>
+<tr><td>T3 超哺乳设计</td><td class="num">4.8×10¹¹</td><td class="num">~0</td><td class="num">4.69</td><td class="num">4,553</td></tr>
+</table></div>
+<div class="callout"><p><strong>规模本身几乎不破坏"几步可达"，却会把局域三角形稀释殆尽。</strong> 因此真实脑的聚类不可能来自整体统计，只能来自<strong>有效邻域</strong>：每个神经元的伙伴集中在一个 10⁵ 量级的局部群体里，在这个尺度上网络的行为与果蝇全脑相同。一个皮层区就是一个"果蝇规模"的计算单元；哺乳类脑是数千个这样的单元由枢纽层缝合起来的网络。要在 10¹¹ 节点下维持三步可达，平均每个神经元需要约 10⁴ 个伙伴（L ≈ ln N / ln ⟨k⟩ = 2.75）——人类皮层的 7,000 个突触恰好处在这个边界上。</p></div>
+
+<h2 id="s6"><span class="n">06</span>T3 超哺乳设计</h2>
+<p>在哺乳类蓝图（皮层片 + 丘脑枢纽 + 海马索引 + 基底节门控 + 小脑预测器）之上，T3 做了五项设计决定：</p>
+<div class="tblwrap"><table>
+<tr><th>设计</th><th>参数</th><th>理由</th></tr>
+<tr><td>双层皮层</td><td class="num">外层 5×10¹⁰ + 内层（内缩 7 mm）5×10¹⁰</td><td>外层保留拓扑感觉运动图，内层承担联合功能；联合区比例从人类的约 70% 提到 85%</td></tr>
+<tr><td>核团式联合区</td><td class="num">16 个高密度团块，共 2×10¹⁰</td><td>借鉴鸟类端脑的核团式堆叠（同质量 2 倍神经元），规避白质按 1.23 次幂增长；每个团块就是一个独立的"果蝇规模"单元</td></tr>
+<tr><td>丘脑枢纽 ×3</td><td class="num">6×10⁸</td><td>全局工作空间硬件；模型中前 1% 枢纽承载 19% 的边</td></tr>
+<tr><td>海马索引 / 小脑类比</td><td class="num">1×10⁹ / 3.6×10¹¹</td><td>索引容量随皮层等比扩容；小脑按 3.6 : 1 跟随皮层</td></tr>
+<tr><td>长程衰减常数减半</td><td class="num">λ = 0.05 /mm</td><td>等效于更快传导与更密的枢纽层，维持短路径</td></tr>
+</table></div>
+<p>合计约 4.8×10¹¹ 神经元、约 10¹⁵ 突触。设计的图论指纹在同规模对照里可见：枢纽承载比例最高（0.19）、解剖模块度最低（0.32）、rich-club 顶层密度 0.25。损毁实验（第 08 节）暴露了它的脆弱性，并由此产生了修正版 T3c：为小脑类比增加来自皮层、联合区、中脑与丘脑的并行入口。</p>
+
+<h2 id="s7"><span class="n">07</span>算力等价</h2>
+<div class="tblwrap"><table>
+<tr><th>层级</th><th>神经元</th><th>突触</th><th>1 Hz 下突触事件/秒</th><th>等价 FLOP/s（×10）</th><th>等价 RTX 5060 Ti</th></tr>
+<tr><td>T0 果蝇（实测）</td><td class="num">1.65×10⁵</td><td class="num">1.24×10⁸</td><td class="num">1.24×10⁸</td><td class="num">1.2×10⁹</td><td class="num">1 / 16,000</td></tr>
+<tr><td>T1 小鼠（估算）</td><td class="num">7.1×10⁷</td><td class="num">1.9×10¹¹</td><td class="num">1.9×10¹¹</td><td class="num">1.9×10¹²</td><td class="num">0.1</td></tr>
+<tr><td>T2 人类（估算）</td><td class="num">8.6×10¹⁰</td><td class="num">1.5×10¹⁴</td><td class="num">1.5×10¹⁴</td><td class="num">1.5×10¹⁵</td><td class="num">≈ 75</td></tr>
+<tr><td>T3 设计（估算）</td><td class="num">4.8×10¹¹</td><td class="num">1.0×10¹⁵</td><td class="num">1.0×10¹⁵</td><td class="num">1.0×10¹⁶</td><td class="num">≈ 500</td></tr>
+</table></div>
+<p class="cap">突触数按角色设定每神经元突触数（皮层 7,000、纹状体 10,000、小脑 450……）估算；人类的估算 1.5×10¹⁴ 与 Pakkenberg 等的立体学计数一致。GPU 等价按 2×10¹³ FLOP/s（FP32）计。</p>
+
+<h2 id="s8"><span class="n">08</span>损毁实验（神经外科视角）</h2>
+<p>把外科医生的问题搬到图上：切掉什么，网络的通信会坏到什么程度？在果蝇真实图（165,122 节点）与 v2 层级模型上做六种切除——随机 5% / 20%（弥漫性损伤）、按度切除前 1% / 5% 枢纽（打击枢纽结构）、解剖性损毁（果蝇：切除全部 3,721 个上行/下行类神经元，相当于颈髓横断；哺乳类模型：切除整个丘脑模块）。指标为有向可达比例、可达对的平均路径与全局效率（可达对 1/距离 的均值）。</p>
+<div class="tblwrap"><table id="les"></table></div>
+<p class="cap">每格：全局效率保留率（相对完整网络）/ 可达对的平均有向路径。可达比例在所有条件下都 ≥ 97.6%，因此没有列出。</p>
+<figure><h4>切除 5% 枢纽 vs 随机切除 20% 的效率保留率</h4><p class="fc">同样的网络，切掉 4 倍数量的随机神经元几乎无损，切掉少数枢纽却代价高昂。</p><div id="figLes"></div></figure>
+<h3>果蝇脑-VNC 桥接的专项核查</h3>
+<p>切除全部上行/下行类神经元后，脑→VNC 的跨区可达性仍为 99.6%，但路径从 3.57 升到 5.14 步（VNC→脑 3.50 → 5.24）。隐藏的桥梁只有 130 个非 AN/DN 神经元（111 个为投射到咽下神经节的 VNC 内在神经元）与 117 条直接的脑→VNC 边；再切除 9,722 个无超类神经元也不改变结果。可达性是"一条通路即可"的二值指标，真正反映功能代价的是路径长度与效率——这与临床经验一致：完全性脊髓损伤并不切断所有解剖通路，但残余通路的效率不足以支撑功能。</p>
+<h3>解读</h3>
+<ul>
+<li><strong>随机损伤几乎免费，枢纽损伤代价高昂。</strong> 这是重尾度分布与 rich-club 的另一面：效率与脆弱性来自同一批节点。</li>
+<li><strong>丘脑的单节点关键性极高。</strong> 人类级模型只切 81 个采样节点（0.06%）就损失 8% 的效率，随机切 28,004 个节点却不损失任何效率：按单节点计，丘脑神经元的关键性是随机神经元的上千倍。这与双侧丘脑梗死导致意识障碍的临床事实方向一致，尽管静态图无法表达丘脑真正的动力学功能（唤醒、门控、同步）。</li>
+<li><strong>越"高级"的设计越依赖枢纽。</strong> 从 T1 到 T3，切除 5% 枢纽的效率损失从 8% 升到 50%。T3 把路由集中到三倍丘脑枢纽与 16 个核团联合区，换来了整合效率，也换来了单点脆弱性。</li>
+<li><strong>果蝇比人类级模型更抗枢纽打击</strong>（77% 对 66%）：它的枢纽层更分散、互惠率高，也没有一个占 80% 节点的局域前馈模块（小脑）放大枢纽依赖。</li>
+</ul>
+<div class="callout"><p><strong>对 T3 的修正（T3b）：</strong>把三倍丘脑枢纽拆成 6 个核并把单节点度降到皮层水平（k<sub>rel</sub> 1.6 → 1.0），皮层长程衰减常数 0.05 → 0.03（更多皮层间直接捷径），核团联合区承担更多路由（总度守恒）。验证标准：同样的枢纽切除下效率保留率明显高于 T3，基线路径不劣于 T3。</p><p><strong>验证结果：T3b 失败，T3c 部分成功。</strong> T3b 切除前 5% 枢纽后效率保留 51.3%（T3 为 50.0%），没有改善——事后分析发现两点：按度排序的前 5% 节点主要是脑桥、延髓、丘脑等在同规模采样里只有一两百个节点、入度却上千的中继模块，而占 74% 节点的小脑其全部输入只经由脑桥/延髓；并且降低丘脑的 k<sub>rel</sub> 只改变了它的出度，入度（约 4,000）由投射它的皮层决定，纹丝未动。真正的单点故障是<strong>皮质-脑桥-小脑瓶颈</strong>，与临床上脑桥病变（闭锁综合征）的灾难性一致。第二次修正 T3c 为小脑增加并行入口（皮层 5%、联合区 4%、中脑 6%、丘脑 3% 的输出直接投向小脑），把入口从数百个中继节点分散到数万个节点：同样的切除下效率保留升到 62.7%，路径从 6.76 步降到 5.08 步，基线路径不变（3.02），随机切除耐受还略有提高（99.4%）。它仍不及人类级（66%）与果蝇（77%）：高度集中的整合架构天生要为效率付出脆弱性的代价，冗余必须放在通往最大模块的入口，而不是放在丘脑。</p></div>
+<p class="small"><strong>静态图的边界：</strong>这里所有指标都是静态连接图的性质。真实损毁的功能后果还取决于神经调制（切除多巴胺/5-HT 系统对图几乎无影响，对行为却是灾难）、时序与振荡、以及数周内的可塑性代偿。损毁实验回答的是"信息还能不能高效地到达"，不是"功能还在不在"。</p>
+
+<h2 id="s8b"><span class="n">09</span>结论与局限</h2>
+<ol>
+<li><strong>规模：</strong>皮层类比 ≥ 10¹¹，小脑类比按 3.6 : 1 跟随，总量约 5×10¹¹。规模决定容量，不决定效率。</li>
+<li><strong>架构：</strong>保留哺乳类蓝图，加双层皮层与核团式联合区解决布线体积，丘脑枢纽扩容 3 倍承担全局路由。</li>
+<li><strong>布线统计：</strong>λ 随脑长缩放（衰减长度 ≈ 脑长的 6–12%）；平均伙伴数 ≥ 10⁴ 以在 10¹¹ 节点下维持三步可达；顶层 1% 枢纽承载约 20% 的边。</li>
+<li><strong>可塑性预算：</strong>结构给出的聚类只有 0.03，目标 ≥ 0.1；差额（3–4 倍的三角形密度）与 0.3 的互惠率必须由学习规则产生。这是从果蝇连接组学到的最重要的一课。</li>
+<li><strong>算力：</strong>约 10¹⁶ FLOP/s 等价，可实现；瓶颈在布线与学习规则。</li>
+<li><strong>鲁棒性：</strong>枢纽集中度越高越脆弱；冗余必须放在通往最大模块的入口（小脑的多条并行入口，T3c），而不是分散丘脑（T3b 无效）。</li>
+</ol>
+<p class="small"><strong>局限：</strong>哺乳类层级的连接数与突触数是角色假设的估算；小鼠"其余"脑区按 Allen 结构体积 × 密度权重拆分；同规模对照固定了 ⟨k⟩ = 166，真实哺乳类的平均度高 1–2 个数量级；生成器尚无"类型/柱"级的可塑性项。</p>
+
+<h2 id="s9"><span class="n">附</span>方法与来源</h2>
+<p>代码与数据在本机 <code>malecns/neuroscale/</code>：<code>src/fetch_malecns.py</code>（neuprint 抓取）、<code>src/fly_graph_stats.py</code>（实测统计与 λ 拟合）、<code>src/blueprint.py</code>（蓝图）、<code>src/generate_tiers.py</code>（GPU 生成）、<code>src/scale_experiment.py</code>（规模实验）、<code>src/netstats.py</code>（python-igraph 指标）。图论指标：全局聚类 = 三角形传递性（无向简单图）；路径长度取 200 个随机源的 BFS；小世界指数 S = (C/C<sub>rand</sub>)/(L/L<sub>rand</sub>)，C<sub>rand</sub> = ⟨k⟩/N，L<sub>rand</sub> = ln N / ln ⟨k⟩；模块度按解剖模块划分与 Leiden 社区各算一次；rich-club φ(k) 为度大于 k 的节点间的连接密度。</p>
+<p class="src">来源：Berg et al. 2026 Cell（male CNS 连接组）；Dorkenwald et al. 2024 Nature（FlyWire）；Lin et al. 2024 Nature（果蝇网络统计：C = 0.0477，S = 141）；Herculano-Houzel 2006 / 2009 / 2010（神经元计数、小脑比例）；MICrONS Consortium 2025 Nature；Ercsey-Ravasz et al. 2013、Horvát et al. 2016（指数距离规则）；Olkowicz et al. 2016 PNAS（鸟类神经元密度）；Pakkenberg et al. 2003（人类新皮层突触）；Zhang &amp; Sejnowski 2000 PNAS（白质尺度律）；Zador 2019 Nat Commun（基因组瓶颈）；Allen CCF 2017；fsaverage5。</p>
+</main>
+</div>
+
+<script>
+(function () {
+  const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+  // --- superclass flow heatmap
+  const G = ['OL', 'CB', 'VNC', 'VP', 'SENS', 'AN', 'DN', 'MOTOR'];
+  const rows = {
+    OL:    [81.0, 0.1, 0.0, 18.7, 0.2, 0.0, 0.0, 0.0],
+    CB:    [0.0, 90.6, 0.0, 2.9, 1.4, 0.8, 4.0, 0.2],
+    VNC:   [0.0, 0.0, 76.3, 0.0, 3.2, 11.4, 2.0, 6.9],
+    VP:    [38.6, 27.4, 0.0, 32.2, 0.0, 0.1, 1.5, 0.0],
+    SENS:  [4.8, 22.8, 33.5, 0.8, 21.3, 12.3, 3.1, 1.3],
+    AN:    [0.2, 30.2, 38.8, 1.4, 3.4, 14.6, 8.8, 2.3],
+    DN:    [1.0, 28.8, 39.8, 1.9, 1.5, 10.3, 12.2, 4.2],
+    MOTOR: [0.0, 24.4, 42.1, 0.7, 1.9, 4.8, 9.1, 16.7] };
+  const share = { OL: '42.5%', CB: '29.4%', VNC: '9.4%', VP: '8.6%', SENS: '4.6%', AN: '3.0%', DN: '2.4%', MOTOR: '0.1%' };
+  let h = '<tr><th>来源 → 目标</th>' + G.map(g => `<th>${g}</th>`).join('') + '<th>占全部边</th></tr>';
+  for (const g of G) h += `<tr><td class="rowh">${g}</td>` + rows[g].map(v => `<td style="background:rgba(47,111,174,${(v / 100 * 0.85).toFixed(2)});color:${v > 45 ? '#fff' : 'inherit'}">${v.toFixed(1)}</td>`).join('') + `<td>${share[g]}</td></tr>`;
+  document.getElementById('heat').innerHTML = h;
+  // --- comparison table
+  const M = [
+    ['果蝇实测（有胞体子图）', 0.114, 0.228, 3.09, 2.85, 42, 0.442, 0.690, 0.294, 0.16],
+    ['T0 生成对照', 0.019, 0.017, 2.95, 2.63, 6, 0.456, 0.626, 0.008, 0.10],
+    ['T1 小鼠级', 0.058, 0.046, 3.12, 2.78, 18, 0.467, 0.607, 0.032, 0.12],
+    ['T1 小鼠前脑', 0.025, 0.035, 2.97, 2.62, 8, 0.289, 0.499, 0.015, 0.10],
+    ['T2 人类级', 0.133, 0.258, 4.46, 2.69, 47, 0.428, 0.710, 0.179, 0.17],
+    ['T2 人类前脑', 0.036, 0.062, 3.08, 2.60, 12, 0.0, 0.558, 0.017, 0.19],
+    ['T3 超哺乳级', 0.091, 0.299, 5.04, 2.71, 32, 0.324, 0.656, 0.190, 0.19],
+    ['T3 超哺乳前脑', 0.029, 0.037, 2.93, 2.56, 10, 0.080, 0.471, 0.015, 0.17]];
+  const V2 = [['T0 生成对照', 0.016, 2.90, 6, 0.294], ['T1 小鼠级', 0.052, 3.08, 19, 0.307], ['T1 小鼠前脑', 0.022, 2.93, 9, 0.298], ['T2 人类级', 0.122, 3.06, 50, 0.392], ['T2 人类前脑', 0.032, 2.89, 13, 0.299], ['T3 超哺乳级', 0.086, 3.04, 36, 0.403], ['T3 超哺乳前脑', 0.026, 2.84, 10, 0.298], ['T3b 修正版（分散丘脑）', 0.073, 3.02, 30, 0.397], ['T3c 修正版 2（小脑多入口）', 0.071, 3.01, 30, 0.396]];
+  const hd = ['模型', 'C 全局', '局部聚类', 'L 有向', 'L 无向', 'S', 'Q 解剖', 'Q Leiden', '互惠率', '前 1% 枢纽边'];
+  const dg = [null, 3, 3, 2, 2, 0, 3, 3, 3, 2];
+  document.getElementById('cmp').innerHTML = '<tr>' + hd.map(x => `<th>${x}</th>`).join('') + '</tr>' +
+    M.map(r => '<tr>' + r.map((v, i) => i === 0 ? `<td>${v}</td>` : `<td class="num ${i === 1 && v > 0.1 ? 'hi' : ''}">${v.toFixed(dg[i])}</td>`).join('') + '</tr>').join('');
+  document.getElementById('cmp2').innerHTML = '<tr><th>模型（v2，互惠率 0.29）</th><th>C 全局</th><th>L 有向</th><th>S</th><th>互惠率</th></tr>' +
+    V2.map(r => `<tr><td>${r[0]}</td><td class="num">${r[1].toFixed(3)}</td><td class="num">${r[2].toFixed(2)}</td><td class="num">${r[3]}</td><td class="num">${r[4].toFixed(3)}</td></tr>`).join('');
+  // --- comparison bars
+  const col = n => n.includes('前脑') ? css('--fb') : n.includes('对照') ? css('--ctrl') : n.startsWith('T1') ? css('--t1') : n.startsWith('T2') ? css('--t2') : n.startsWith('T3') ? css('--t3') : css('--t0');
+  function bars(title, idx, fmt) {
+    const W = 400, rh = 15, L = 132, vmax = Math.max(...M.map(r => r[idx]));
+    const r = M.map((row, i) => { const v = row[idx], w = Math.max(v / vmax * (W - L - 56), 0), y = i * rh;
+      return `<text x="${L - 6}" y="${y + 11}" text-anchor="end" font-size="9.5" fill="currentColor" opacity=".75">${row[0]}</text><rect x="${L}" y="${y + 3}" width="${w.toFixed(1)}" height="9" rx="2" fill="${col(row[0])}"/><text x="${(L + w + 5).toFixed(1)}" y="${y + 11}" font-size="9.5" fill="currentColor" font-family="IBM Plex Mono,monospace">${fmt(v)}</text>`; }).join('');
+    return `<div style="margin:6px 0 10px"><div style="font-size:12.5px;font-weight:500;margin-bottom:2px">${title}</div><svg viewBox="0 0 ${W} ${M.length * rh + 2}" role="img" aria-label="${title}" style="color:${css('--ink')}">${r}</svg></div>`;
+  }
+  document.getElementById('figCmp').innerHTML = bars('聚类系数 C', 1, v => v.toFixed(3)) + bars('平均有向路径 L', 3, v => v.toFixed(2)) + bars('小世界指数 S', 5, v => v.toFixed(0)) + bars('前 1% 枢纽承载的边', 9, v => (v * 100).toFixed(0) + '%');
+  // --- lesion table & figure
+  const LES = [
+    ['T0 果蝇（实测）', [100.5, 3.24], [99.3, 3.26], [87.9, 3.73], [77.3, 4.21], [91.1, 3.66], 'AN/DN 全切 3,721'],
+    ['T1 小鼠级', [101.0, 3.09], [99.0, 3.15], [97.4, 3.20], [92.3, 3.39], [97.2, 3.23], '丘脑 913'],
+    ['T2 人类级', [100.2, 3.09], [97.5, 3.18], [78.2, 3.98], [66.3, 4.80], [92.3, 3.36], '丘脑 81'],
+    ['T3 超哺乳级', [100.6, 3.00], [97.6, 3.09], [75.4, 4.05], [50.0, 6.76], [92.1, 3.29], '丘脑 174'],
+    ['T3b 修正版（分散丘脑）', [100.8, 3.02], [99.3, 3.05], [74.7, 4.15], [51.3, 6.61], [92.8, 3.28], '丘脑 174'],
+    ['T3c 修正版 2（小脑多入口）', [100.6, 3.01], [99.4, 3.05], [76.5, 4.06], [62.7, 5.08], [93.2, 3.26], '丘脑 174']];
+  const cell = v => v ? `<td class="num ${v[0] < 80 ? 'hi' : ''}">${v[0].toFixed(1)}% / ${v[1].toFixed(2)}</td>` : '<td class="num">待验证</td>';
+  document.getElementById('les').innerHTML = '<tr><th>网络</th><th>随机 5%</th><th>随机 20%</th><th>枢纽 1%</th><th>枢纽 5%</th><th>解剖性损毁</th><th>解剖性损毁对象</th></tr>' +
+    LES.map(r => `<tr><td>${r[0]}</td>${cell(r[1])}${cell(r[2])}${cell(r[3])}${cell(r[4])}${cell(r[5])}<td>${r[6]}</td></tr>`).join('');
+  (function () {
+    const rows = LES.filter(r => r[4]); const W = 420, rh = 18, L = 110, gap = 4;
+    let g = '';
+    rows.forEach((r, i) => { const y = i * (rh * 2 + gap); const w1 = r[4][0] / 100 * (W - L - 60), w2 = r[2][0] / 100 * (W - L - 60);
+      g += `<text x="${L - 6}" y="${y + rh + 2}" text-anchor="end" font-size="10" fill="currentColor" opacity=".8">${r[0]}</text>`;
+      g += `<rect x="${L}" y="${y + 2}" width="${w1.toFixed(1)}" height="${rh - 4}" rx="2" fill="${css('--t3')}"/><text x="${(L + w1 + 4).toFixed(1)}" y="${y + rh - 5}" font-size="9.5" fill="currentColor" font-family="IBM Plex Mono,monospace">枢纽 5%：${r[4][0].toFixed(0)}%</text>`;
+      g += `<rect x="${L}" y="${y + rh}" width="${w2.toFixed(1)}" height="${rh - 4}" rx="2" fill="${css('--t1')}" opacity=".8"/><text x="${(L + w2 + 4).toFixed(1)}" y="${y + 2 * rh - 7}" font-size="9.5" fill="currentColor" font-family="IBM Plex Mono,monospace">随机 20%：${r[2][0].toFixed(0)}%</text>`; });
+    document.getElementById('figLes').innerHTML = `<svg viewBox="0 0 ${W} ${rows.length * (rh * 2 + gap)}" role="img" aria-label="枢纽切除与随机切除的效率保留率" style="color:${css('--ink')}">${g}</svg>`;
+  })();
+  // --- scaling figure
+  const runs = [[20000, 0.1845, 2.90], [50000, 0.1124, 3.22], [100000, 0.0715, 3.05], [200000, 0.0449, 3.18], [400000, 0.0275, 3.28]];
+  const fitC = N => Math.exp(4.6815) * Math.pow(N, -0.6386), fitL = N => 1.9679 + 0.1010 * Math.log(N);
+  function line(title, ylab, pts, fit, ylog, yfmt) {
+    const W = 400, H = 210, L = 46, R = 12, T = 12, B = 30, xmin = 2e4, xmax = 1e11;
+    const ys = pts.map(p => p[1]).concat([fit(xmin), fit(xmax)]).filter(v => v > 0); const ymin = Math.min(...ys), ymax = Math.max(...ys);
+    const X = v => L + (Math.log10(v) - Math.log10(xmin)) / (Math.log10(xmax) - Math.log10(xmin)) * (W - L - R);
+    const Y = v => T + (1 - (ylog ? (Math.log10(v) - Math.log10(ymin)) / (Math.log10(ymax) - Math.log10(ymin)) : (v - ymin) / (ymax - ymin))) * (H - T - B);
+    let g = '';
+    for (let e = 5; e <= 11; e++) g += `<line x1="${X(10 ** e)}" x2="${X(10 ** e)}" y1="${T}" y2="${H - B}" stroke="currentColor" opacity=".12"/><text x="${X(10 ** e)}" y="${H - B + 13}" text-anchor="middle" font-size="9.5" fill="currentColor" opacity=".7" font-family="IBM Plex Mono,monospace">10${'⁰¹²³⁴⁵⁶⁷⁸⁹'[e] || e}</text>`;
+    const yt = ylog ? [1e-5, 1e-4, 1e-3, 1e-2, 1e-1].filter(v => v >= ymin && v <= ymax) : [2.5, 3, 3.5, 4, 4.5, 5].filter(v => v >= ymin && v <= ymax);
+    for (const v of yt) g += `<line x1="${L}" x2="${W - R}" y1="${Y(v)}" y2="${Y(v)}" stroke="currentColor" opacity=".12"/><text x="${L - 5}" y="${Y(v) + 3.5}" text-anchor="end" font-size="9.5" fill="currentColor" opacity=".7" font-family="IBM Plex Mono,monospace">${yfmt(v)}</text>`;
+    let d = ''; for (let e = Math.log10(xmin); e <= 11.001; e += 0.2) { const N = 10 ** e, v = fit(N); if (v > 0) d += `${d ? 'L' : 'M'}${X(N).toFixed(1)},${Y(Math.max(v, ymin)).toFixed(1)}`; }
+    const dots = pts.map(p => `<circle cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="3.2" fill="${css('--t1')}"><title>N=${p[0].toLocaleString()} ${ylab}=${yfmt(p[1])}</title></circle>`).join('');
+    const marks = [[165122, 'T0'], [7.1e7, 'T1'], [8.6e10, 'T2']].map(([N, t]) => `<line x1="${X(N)}" x2="${X(N)}" y1="${T}" y2="${H - B}" stroke="${css('--t' + t[1])}" stroke-dasharray="2 3" opacity=".8"/><text x="${X(N) + 3}" y="${T + 9}" font-size="9" fill="${css('--t' + t[1])}">${t}</text>`).join('');
+    return `<div style="margin:4px 0 8px"><div style="font-size:12.5px;font-weight:500;margin-bottom:2px">${title}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}" style="color:${css('--ink')}">${g}${marks}<path d="${d}" fill="none" stroke="${css('--t1')}" stroke-width="1.6" stroke-dasharray="5 4" opacity=".8"/>${dots}<text x="${W - R}" y="${H - 2}" text-anchor="end" font-size="9.5" fill="currentColor" opacity=".6">N（对数）</text></svg></div>`;
+  }
+  document.getElementById('figScale').innerHTML = '<div class="two">' + line('聚类系数 C（对数）', 'C', runs.map(r => [r[0], r[1]]), fitC, true, v => v >= 0.01 ? v.toFixed(2) : v.toExponential(0)) + line('平均有向路径 L', 'L', runs.map(r => [r[0], r[2]]), fitL, false, v => v.toFixed(1)) + '</div><div class="lg"><span style="--c:' + css('--t1') + '">生成网络实测点 / 拟合外推（虚线）</span><span style="--c:' + css('--t0') + '">竖线：各层级真实神经元数</span></div>';
+})();
+</script>
