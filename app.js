@@ -166,7 +166,8 @@ async function showTier(id) {
   if (state.nodes) { box = new THREE.Box3(); const p = state.nodes.xyz; const v = new THREE.Vector3(); for (let i = 0; i < p.length; i += 3) { v.set(p[i], p[i + 1], p[i + 2]); box.expandByPoint(v); } }
   else { const ms = (await Promise.all(meshPromises)).filter(Boolean); if (state.tier !== t) return; box = new THREE.Box3(); ms.forEach(m => box.expandByObject(m)); }
   if (box && !box.isEmpty()) frame(box, t.up);
-  renderControls(t); renderLegend(t); renderFrame(t); renderPanel(t); setLoading(null);
+  try { renderControls(t); renderLegend(t); renderFrame(t); renderPanel(t); }
+  finally { setLoading(null); }
 }
 
 // ------------------------------------------------------------------ UI: rail, hud, legend
@@ -253,9 +254,10 @@ function architectureNotes(t) {
   const cb = t.modules.filter(m => m.system === '小脑').reduce((a, m) => a + m.N_true, 0) / t.N_true;
   const th = t.modules.find(m => m.role === 'th');
   const lamC = t.modules.find(m => m.role === 'cortex')?.lambda_per_mm;
+  const flyLam = state.data.tiers.find(x => x.id === 'T0')?.edr?.lambda_per_mm;
   return [`皮层系占神经元总数的 ${(ctx * 100).toFixed(0)}%，小脑占 ${(cb * 100).toFixed(0)}%（果蝇：视叶 51%、中央脑内在 19%）。`,
     `丘脑枢纽 ${fmtSci(th?.N_true)} 个神经元，占 ${(th.N_true / t.N_true * 100).toFixed(2)}%，却按投射矩阵接收皮层 6% 的输出并把 75% 的输出送回皮层：极少数节点承担全局路由。`,
-    `皮层长程连接的指数距离规则 λ = ${lamC}/mm（果蝇胞体层面拟合 ${fmt(state.data.tiers[0].edr.lambda_per_mm, 1)}/mm），衰减长度 ${fmtInt(1000 / lamC)} µm。`];
+    `皮层长程连接的指数距离规则 λ = ${lamC}/mm（果蝇胞体层面拟合 ${flyLam == null ? '—' : fmt(flyLam, 1)}/mm），衰减长度 ${fmtInt(1000 / lamC)} µm。`];
 }
 
 // ------------------------------------------------------------------ charts (plain SVG)
