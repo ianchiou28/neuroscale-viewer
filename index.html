@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <title>NeuroScale</title>
-<meta name="description" content="从果蝇雄性中枢神经系统连接组出发，推演小鼠、人类与超哺乳层级智能网络的 3D 模型与图论指标">
+<meta name="description" content="从果蝇连接组出发的小鼠级神经网络：70,999,999 神经元全量动态运行、3D 结构与工程验证">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
 <style>
@@ -100,6 +100,38 @@ table.stats td.v.hi{color:var(--accent)}
 .method h4{margin:14px 0 4px;font-size:13px}
 .method code{font:12px var(--font-mono);background:var(--bg3);padding:1px 4px;border-radius:3px}
 .src{font-size:11px;color:var(--ink3);margin-top:16px;line-height:1.6}
+.dynamic-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.dynamic-status{display:inline-flex;align-items:center;gap:6px;color:var(--good);font:500 11px var(--font-mono);white-space:nowrap}
+.dynamic-status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.dynamic-status.fail{color:var(--warn)}
+.dynamic-summary{font-size:12px;color:var(--ink2);margin:0 0 12px;max-width:62ch}
+.dynamic-controls{background:var(--bg3);border:1px solid var(--line);border-radius:6px;padding:10px 11px;margin-bottom:12px}
+.dynamic-controls .row{display:flex;align-items:center;gap:8px}
+.dynamic-controls button{background:var(--accent);color:#171109;border:0;border-radius:4px;padding:5px 11px;cursor:pointer;font-weight:700;min-width:58px}
+.dynamic-controls input[type=range]{flex:1;min-width:80px;accent-color:var(--accent)}
+.dynamic-time{font:12px var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink2)}
+.dynamic-readout{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:9px}
+.dynamic-readout .cell{background:var(--bg2);border-radius:4px;padding:7px 8px}
+.dynamic-readout .key{font:10px var(--font-mono);letter-spacing:.06em;color:var(--ink3);text-transform:uppercase}
+.dynamic-readout .val{font:500 15px var(--font-mono);font-variant-numeric:tabular-nums;margin-top:1px}
+.dynamic-chart{margin:8px 0 15px}
+.dynamic-chart svg{width:100%;height:auto;display:block;touch-action:none;cursor:crosshair}
+.dynamic-chart .axis{fill:var(--ink3);font:9px var(--font-mono)}
+.dynamic-chart .grid{stroke:var(--line);stroke-width:1}
+.dynamic-chart .cursor{stroke:var(--ink);stroke-width:1;opacity:.8;pointer-events:none}
+.dynamic-chart .hit{fill:transparent}
+.module-bars{display:grid;gap:5px;margin:6px 0 16px}
+.module-row{display:grid;grid-template-columns:96px minmax(0,1fr) 62px;gap:7px;align-items:center;font-size:11px}
+.module-row .name{color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.module-track{height:7px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.module-fill{height:100%;border-radius:4px;transition:width .12s linear}
+.module-row .rate{font:10px var(--font-mono);text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.gate-table td.pass{color:var(--good)}
+.gate-table{table-layout:fixed}
+.gate-table th,.gate-table td,.gate-table td.v{font-size:11px;padding-left:3px;white-space:normal;overflow-wrap:anywhere}
+.boundary{border-left:3px solid var(--warn);background:rgba(251,146,60,.08);padding:8px 10px;margin:12px 0;font-size:12px;color:var(--ink2)}
+.empty-dynamic{padding:18px 0;color:var(--ink2)}
+.empty-dynamic button{display:block;margin-top:10px;background:var(--bg4);border:1px solid var(--line2);border-radius:4px;padding:5px 9px;color:var(--ink);cursor:pointer}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 @media (max-width:1000px){
   .app{grid-template-columns:1fr;grid-template-rows:auto 58vh auto;height:auto}
@@ -116,7 +148,7 @@ table.stats td.v.hi{color:var(--accent)}
 </script>
 
 <header class="top">
-  <div class="brand"><span class="brand-name">NeuroScale</span><span class="brand-sub">从果蝇连接组到超哺乳智能网络 · 3D 推演模型</span></div>
+  <div class="brand"><span class="brand-name">NeuroScale</span><span class="brand-sub">70M 小鼠级神经系统 · 全量动态运行与 3D 结构</span></div>
   <div class="top-meta" id="topMeta">male-cns:v1.0 · neuprint</div>
 </header>
 <div class="app">
@@ -131,12 +163,14 @@ table.stats td.v.hi{color:var(--accent)}
   </section>
   <aside class="panel">
     <div class="tabs" id="tabs" role="tablist">
-      <button data-tab="stats" class="on" role="tab">指标</button>
-      <button data-tab="dist" role="tab">分布</button>
-      <button data-tab="notes" role="tab">推演</button>
-      <button data-tab="method" role="tab">方法</button>
+      <button data-tab="dynamic" role="tab" aria-selected="false">动态</button>
+      <button data-tab="stats" class="on" role="tab" aria-selected="true">指标</button>
+      <button data-tab="dist" role="tab" aria-selected="false">分布</button>
+      <button data-tab="notes" role="tab" aria-selected="false">推演</button>
+      <button data-tab="method" role="tab" aria-selected="false">方法</button>
     </div>
     <div class="tabpanes">
+      <div class="pane" id="pane-dynamic"></div>
       <div class="pane on" id="pane-stats"></div>
       <div class="pane" id="pane-dist"></div>
       <div class="pane" id="pane-notes"></div>

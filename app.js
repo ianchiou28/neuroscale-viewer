@@ -75,7 +75,8 @@ const pointMat = new THREE.ShaderMaterial({
 const edgeMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.28, depthWrite: false });
 
 const state = { data: null, tier: null, nodes: null, edges: null, modVis: [], show: { mesh: true, roi: false, nodes: true, edges: true }, forebrain: false, edgeCount: 30000,
-  pointScale: 1, maxDim: 1000, objs: { points: null, edges: null, meshes: [], rois: [] }, roiLoaded: false, tab: 'stats' };
+  pointScale: 1, maxDim: 1000, objs: { points: null, edges: null, meshes: [], rois: [] }, roiLoaded: false, tab: 'stats',
+  dynamic: null, dynamicStep: 0, dynamicPlaying: false, dynamicTimer: null, dynamicBaseSizes: null, dynamicBaseColors: null };
 
 function resize() {
   const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return;
@@ -99,7 +100,7 @@ function frame(box, up) {
   pointMat.uniforms.uSize.value = maxDim * 0.0032 * state.pointScale;
 }
 function disposeObj(o) { if (!o) return; world.remove(o); o.geometry?.dispose(); if (o.material && o.material !== pointMat && o.material !== edgeMat) o.material.dispose(); }
-function clearWorld() { const ob = state.objs; disposeObj(ob.points); ob.meshes.forEach(disposeObj); ob.rois.forEach(disposeObj); disposeObj(ob.edges); state.objs = { points: null, edges: null, meshes: [], rois: [] }; state.roiLoaded = false; }
+function clearWorld() { const ob = state.objs; disposeObj(ob.points); ob.meshes.forEach(disposeObj); ob.rois.forEach(disposeObj); disposeObj(ob.edges); state.objs = { points: null, edges: null, meshes: [], rois: [] }; state.roiLoaded = false; state.dynamicBaseSizes = state.dynamicBaseColors = null; }
 
 function buildPoints() {
   const t = state.tier, nodes = state.nodes, n = nodes.hdr.n;
@@ -112,6 +113,7 @@ function buildPoints() {
   geo.setAttribute('psize', new THREE.BufferAttribute(size, 1));
   geo.setAttribute('vis', new THREE.BufferAttribute(vis, 1));
   const pts = new THREE.Points(geo, pointMat); pts.visible = state.show.nodes; world.add(pts); state.objs.points = pts;
+  state.dynamicBaseSizes = size.slice(); state.dynamicBaseColors = col.slice();
 }
 function buildEdges() {
   disposeObj(state.objs.edges); state.objs.edges = null;
@@ -152,6 +154,7 @@ function applyModuleVisibility() {
 function setLoading(msg) { const el = $('#loading'); el.hidden = !msg; if (msg) el.textContent = msg; }
 async function showTier(id) {
   const t = state.data.tiers.find(x => x.id === id); if (!t) return;
+  stopDynamic();
   state.tier = t; renderRail(); renderHudTitle(t, ''); setLoading('载入网络数据…'); clearWorld();
   const useFB = state.forebrain && t.nodes_forebrain;
   state.nodes = state.edges = null;
@@ -219,7 +222,8 @@ function renderLegend(t) {
 }
 function renderFrame(t) {
   const n = state.nodes?.hdr.n; const fb = state.forebrain && t.nodes_forebrain ? '（前脑子网）' : '';
-  $('#hudFrame').innerHTML = `<div class="frame">${esc(t.frame)}<br>渲染 ${fmtInt(n)} 个节点${fb}，${fmtInt(Math.min(state.edges?.hdr.n ?? 0, state.edgeCount))} / ${fmtInt(state.edges?.hdr.n)} 条连接（按突触数加权采样，胞体连线为抽象表示）<br>采样比 1 : ${fmtInt(t.sampling_ratio)}</div>`;
+  const dyn = t.id === 'M1' && state.tab === 'dynamic' && state.dynamic ? `<br><span style="color:var(--good)">动态投影：step ${state.dynamic.full_run.trace[state.dynamicStep]?.step || 1}/100</span>（模块级聚合，不是逐神经元记录）` : '';
+  $('#hudFrame').innerHTML = `<div class="frame">${esc(t.frame)}<br>渲染 ${fmtInt(n)} 个节点${fb}，${fmtInt(Math.min(state.edges?.hdr.n ?? 0, state.edgeCount))} / ${fmtInt(state.edges?.hdr.n)} 条连接（按突触数加权采样，胞体连线为抽象表示）<br>采样比 1 : ${fmtInt(t.sampling_ratio)}${dyn}</div>`;
 }
 
 // ------------------------------------------------------------------ panel
@@ -247,6 +251,7 @@ function renderPanel(t) {
   const types = t.types ? `<div class="note">${fmtInt(t.types.n_types)} 个细胞类型；每型中位数 ${fmt(t.types.per_type_median, 0)} 个、均值 ${fmt(t.types.per_type_mean, 1)} 个。最大的类型：${Object.entries(t.types.top).slice(0, 6).map(([k, v]) => `${esc(k)} ${fmtInt(v)}`).join('，')}。</div>` : '';
   $('#pane-notes').innerHTML = `<h3>${esc(t.id)} 推演要点</h3><ul class="notes">${(t.notes || []).map(n => `<li>${esc(n)}</li>`).join('')}</ul>${types}` +
     (t.id === 'T0' ? '' : `<h3>相对果蝇的结构变化</h3><ul class="notes">${architectureNotes(t).map(n => `<li>${n}</li>`).join('')}</ul>`);
+  renderDynamics(t);
   renderDist(t);
 }
 function architectureNotes(t) {
@@ -258,6 +263,136 @@ function architectureNotes(t) {
   return [`皮层系占神经元总数的 ${(ctx * 100).toFixed(0)}%，小脑占 ${(cb * 100).toFixed(0)}%（果蝇：视叶 51%、中央脑内在 19%）。`,
     `丘脑枢纽 ${fmtSci(th?.N_true)} 个神经元，占 ${(th.N_true / t.N_true * 100).toFixed(2)}%，却按投射矩阵接收皮层 6% 的输出并把 75% 的输出送回皮层：极少数节点承担全局路由。`,
     `皮层长程连接的指数距离规则 λ = ${lamC}/mm（果蝇胞体层面拟合 ${flyLam == null ? '—' : fmt(flyLam, 1)}/mm），衰减长度 ${fmtInt(1000 / lamC)} µm。`];
+}
+
+// ------------------------------------------------------------------ full-scale dynamics
+function dynamicPlot(title, cap, series, { includeZero = false, valueFmt = v => fmt(v, 4) } = {}) {
+  const trace = state.dynamic.full_run.trace, W = 380, H = 104, L = 50, R = 8, T = 10, B = 20;
+  const values = series.flatMap(s => s.values).filter(Number.isFinite);
+  let lo = Math.min(...values), hi = Math.max(...values);
+  if (includeZero) { lo = Math.min(0, lo); hi = Math.max(0, hi); }
+  const pad = (hi - lo || Math.max(Math.abs(hi), 1)) * 0.08; lo -= pad; hi += pad;
+  const X = i => L + i / Math.max(trace.length - 1, 1) * (W - L - R);
+  const Y = v => T + (1 - (v - lo) / (hi - lo || 1)) * (H - T - B);
+  const gridVals = [lo, (lo + hi) / 2, hi];
+  const grid = gridVals.map(v => `<line class="grid" x1="${L}" x2="${W - R}" y1="${Y(v).toFixed(2)}" y2="${Y(v).toFixed(2)}"/><text class="axis" x="${L - 5}" y="${(Y(v) + 3).toFixed(2)}" text-anchor="end">${valueFmt(v)}</text>`).join('');
+  const lines = series.map(s => `<polyline fill="none" stroke="${s.color}" stroke-width="${s.width || 1.8}" ${s.dash ? 'stroke-dasharray="4 3"' : ''} points="${s.values.map((v, i) => `${X(i).toFixed(2)},${Y(v).toFixed(2)}`).join(' ')}"/>`).join('');
+  const legend = series.length > 1 ? `<div class="lg">${series.map(s => `<span style="--c:${s.color}">${esc(s.name)}</span>`).join('')}</div>` : '';
+  return `<div class="dynamic-chart"><h4>${esc(title)}</h4><div class="cap">${esc(cap)}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">
+    ${grid}${includeZero ? `<line x1="${L}" x2="${W - R}" y1="${Y(0).toFixed(2)}" y2="${Y(0).toFixed(2)}" stroke="#66738c"/>` : ''}${lines}
+    <line class="cursor" data-dynamic-cursor x1="${L}" x2="${L}" y1="${T}" y2="${H - B}"/>
+    <rect class="hit" data-dynamic-hit x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}"/>
+    <text class="axis" x="${L}" y="${H - 4}">10 ms</text><text class="axis" x="${W - R}" y="${H - 4}" text-anchor="end">1,000 ms 模型时间</text></svg>${legend}</div>`;
+}
+
+function renderDynamics(t) {
+  const pane = $('#pane-dynamic');
+  if (t.id !== 'M1') {
+    pane.innerHTML = `<div class="empty-dynamic">全量动态轨迹只对应 M1 小鼠级网络。<button id="toM1" type="button">切换到 M1</button></div>`;
+    $('#toM1').onclick = async () => { selectTab('dynamic'); await showTier('M1'); };
+    return;
+  }
+  const d = state.dynamic;
+  if (!d?.full_run?.trace?.length) { pane.innerHTML = '<div class="empty-dynamic">动态结果未载入。</div>'; return; }
+  const run = d.full_run, trace = run.trace, verify = d.verification, ladder = d.scale_ladder;
+  const moduleOrder = run.interfaces.module_order;
+  const moduleRows = moduleOrder.map((id, i) => {
+    const m = t.modules.find(x => x.id === id) || { label: id, color: '#9aa6bd' };
+    return `<div class="module-row" data-dynamic-module="${i}"><span class="name">${esc(m.label)}</span><div class="module-track"><div class="module-fill" style="width:0;background:${m.color}"></div></div><span class="rate">0.000%</span></div>`;
+  }).join('');
+  const gateRows = ladder.rows.map(r => `<tr><td>${r.nodes === run.graph.nodes ? '70M 全量' : fmtSci(r.nodes)}</td><td class="v">${fmtSci(r.nodes)}</td><td class="v">${fmtSci(r.edges_in_runtime)}</td><td class="v">${fmt(r.seconds_100_bins, 3)} s</td><td class="v">${fmt(r.peak_gpu_gib, 2)} GiB</td><td class="v pass">${r.passed ? '通过' : '未通过'}</td></tr>`).join('');
+  pane.innerHTML = `<div class="dynamic-head"><div><h3>70M 全量动态运行</h3><div class="hud-sub">稀疏延迟 · 快慢双状态 · 100 × 10 ms</div></div><span class="dynamic-status ${run.runtime_gate_passed && verify.verification_passed ? '' : 'fail'}">${run.runtime_gate_passed && verify.verification_passed ? '运行与独立验证通过' : '存在未通过项'}</span></div>
+    <p class="dynamic-summary">这里回放的是后端全量运行的真实聚合轨迹。左侧 3D 脑图只把每个脑区的活动率投影到采样节点，不伪装成 70M 个逐神经元轨迹。</p>
+    <div class="dynamic-controls"><div class="row"><button id="dynamicPlay" type="button">播放</button><input id="dynamicStep" type="range" min="0" max="${trace.length - 1}" value="${state.dynamicStep}" aria-label="动态步数"><span class="dynamic-time" id="dynamicTime">—</span></div>
+      <div class="dynamic-readout" aria-live="polite"><div class="cell"><div class="key">活跃神经元</div><div class="val" id="dynActive">—</div></div><div class="cell"><div class="key">活跃比例</div><div class="val" id="dynFraction">—</div></div><div class="cell"><div class="key">本步调度连接</div><div class="val" id="dynEdges">—</div></div><div class="cell"><div class="key">动作差值 L−R</div><div class="val" id="dynAction">—</div></div></div></div>
+    ${dynamicPlot('全脑活跃比例', '每个 10 ms 时间箱中，绝对状态超过阈值的神经元比例。', [{ name: '活跃比例', color: '#7ed491', values: trace.map(r => r.active_neuron_fraction * 100) }], { valueFmt: v => v.toFixed(2) + '%' })}
+    ${dynamicPlot('快状态与慢状态', '全量 70,999,999 个状态槽的平均绝对值。', [{ name: '快状态', color: '#6ec6ff', values: trace.map(r => r.mean_abs_fast) }, { name: '慢状态', color: '#f5b942', values: trace.map(r => r.mean_abs_slow) }], { includeZero: true, valueFmt: v => v.toFixed(4) })}
+    ${dynamicPlot('动作读出差值', '工程接口 action_left − action_right；不等同于已经学会行为。', [{ name: '动作差值', color: '#f0abfc', values: trace.map(r => r.action_margin) }], { includeZero: true, valueFmt: v => v.toExponential(1) })}
+    <h3>当前时间箱 · 各模块活跃源比例</h3><div class="note">按该模块的真实神经元数归一化；条形满刻度为 4%，3D 点亮强度使用同一组模块级比例。</div><div class="module-bars">${moduleRows}</div>
+    <h3>规模阶梯</h3><table class="stats gate-table"><tr><th>门槛</th><th>神经元</th><th>运行内连接</th><th>100 箱耗时</th><th>GPU 峰值</th><th>状态</th></tr>${gateRows}</table>
+    <h3>独立复核</h3><table class="stats"><tr><td>全量状态槽</td><td class="v">${fmtInt(run.graph.nodes)}</td></tr><tr><td>全图连接，无边界排除</td><td class="v">${fmtInt(run.graph.edges)}</td></tr><tr><td>fast / slow 检查点最大误差</td><td class="v">${verify.comparisons['fast.npy'].max_absolute_error} / ${verify.comparisons['slow.npy'].max_absolute_error}</td></tr><tr><td>delay queue 最大误差</td><td class="v">${fmtSci(verify.comparisons['delay_queue.npy'].max_absolute_error)}</td></tr><tr><td>峰值 GPU 已分配</td><td class="v">${fmt(run.execution.peak_gpu_allocated_gib, 2)} GiB</td></tr><tr><td>连续运行总耗时</td><td class="v">${fmt(run.execution.uninterrupted_seconds, 2)} s</td></tr></table>
+    <div class="boundary"><strong>结论边界：</strong>当前证明的是 70M 神经元、28.27 亿连接的工程动态可运行性与检查点可复现性。生物权重/延迟、可塑性、学习行为和“小鼠级智能”仍未验证。</div>`;
+  $('#dynamicPlay').onclick = toggleDynamic;
+  $('#dynamicStep').oninput = e => { stopDynamic(); setDynamicStep(+e.target.value); };
+  pane.querySelectorAll('[data-dynamic-hit]').forEach(hit => hit.addEventListener('pointerdown', e => {
+    const box = e.currentTarget.getBoundingClientRect();
+    const i = Math.round(Math.max(0, Math.min(1, (e.clientX - box.left) / box.width)) * (trace.length - 1));
+    stopDynamic(); setDynamicStep(i);
+  }));
+  setDynamicStep(Math.min(state.dynamicStep, trace.length - 1));
+}
+
+function stopDynamic() {
+  if (state.dynamicTimer) clearInterval(state.dynamicTimer);
+  state.dynamicTimer = null; state.dynamicPlaying = false;
+  const b = $('#dynamicPlay'); if (b) b.textContent = '播放';
+}
+function toggleDynamic() {
+  if (state.dynamicPlaying) { stopDynamic(); return; }
+  const trace = state.dynamic?.full_run?.trace || [];
+  if (!trace.length) return;
+  if (state.dynamicStep >= trace.length - 1) setDynamicStep(0);
+  state.dynamicPlaying = true; $('#dynamicPlay').textContent = '暂停';
+  const delay = matchMedia('(prefers-reduced-motion: reduce)').matches ? 320 : 140;
+  state.dynamicTimer = setInterval(() => {
+    if (state.dynamicStep >= trace.length - 1) { stopDynamic(); return; }
+    setDynamicStep(state.dynamicStep + 1);
+  }, delay);
+}
+function setDynamicStep(index) {
+  const trace = state.dynamic?.full_run?.trace; if (!trace?.length) return;
+  state.dynamicStep = Math.max(0, Math.min(trace.length - 1, index));
+  const row = trace[state.dynamicStep], bin = state.dynamic.full_run.execution.time_bin_ms;
+  const slider = $('#dynamicStep'); if (slider) slider.value = state.dynamicStep;
+  const put = (id, value) => { const el = $(id); if (el) el.textContent = value; };
+  put('#dynamicTime', `step ${row.step}/100 · ${fmtInt(row.step * bin)} ms`);
+  put('#dynActive', fmtInt(row.active_neurons));
+  put('#dynFraction', (row.active_neuron_fraction * 100).toFixed(3) + '%');
+  put('#dynEdges', fmtInt(row.active_edges_dispatched));
+  put('#dynAction', row.action_margin.toExponential(3));
+  const x = 50 + state.dynamicStep / Math.max(trace.length - 1, 1) * (380 - 50 - 8);
+  document.querySelectorAll('[data-dynamic-cursor]').forEach(line => { line.setAttribute('x1', x); line.setAttribute('x2', x); });
+  const t = state.tier;
+  if (t?.id === 'M1') {
+    state.dynamic.full_run.interfaces.module_order.forEach((id, i) => {
+      const m = t.modules.find(x => x.id === id), rate = m?.N_true ? row.module_active_sources[i] / m.N_true : 0;
+      const el = paneModule(i); if (!el) return;
+      el.querySelector('.module-fill').style.width = Math.min(100, rate * 100 / 0.04) + '%';
+      el.querySelector('.rate').textContent = (rate * 100).toFixed(3) + '%';
+    });
+    if (state.tab === 'dynamic') { applyDynamicProjection(row); renderFrame(t); }
+  }
+}
+function paneModule(i) { return $(`[data-dynamic-module="${i}"]`, $('#pane-dynamic')); }
+function applyDynamicProjection(row) {
+  const pts = state.objs.points, t = state.tier, nodes = state.nodes;
+  if (!pts || !nodes || t?.id !== 'M1' || !state.dynamicBaseSizes || !state.dynamicBaseColors) return;
+  const order = state.dynamic.full_run.interfaces.module_order;
+  const rates = order.map((id, i) => { const m = t.modules.find(x => x.id === id); return m?.N_true ? row.module_active_sources[i] / m.N_true : 0; });
+  const maxRate = Math.max(...rates, 1e-9), size = pts.geometry.getAttribute('psize'), color = pts.geometry.getAttribute('color'), mmap = t.module_map;
+  for (let i = 0; i < size.count; i++) {
+    const moduleIndex = mmap[nodes.mod[i]] ?? 0, intensity = Math.sqrt(Math.max(0, rates[moduleIndex] || 0) / maxRate), ci = i * 3;
+    size.array[i] = state.dynamicBaseSizes[i] * (0.55 + 1.75 * intensity);
+    const brightness = 0.24 + 0.9 * intensity;
+    color.array[ci] = Math.min(1, state.dynamicBaseColors[ci] * brightness);
+    color.array[ci + 1] = Math.min(1, state.dynamicBaseColors[ci + 1] * brightness);
+    color.array[ci + 2] = Math.min(1, state.dynamicBaseColors[ci + 2] * brightness);
+  }
+  size.needsUpdate = color.needsUpdate = true;
+}
+function resetDynamicProjection() {
+  const pts = state.objs.points; if (!pts || !state.dynamicBaseSizes || !state.dynamicBaseColors) return;
+  pts.geometry.getAttribute('psize').array.set(state.dynamicBaseSizes);
+  pts.geometry.getAttribute('color').array.set(state.dynamicBaseColors);
+  pts.geometry.getAttribute('psize').needsUpdate = pts.geometry.getAttribute('color').needsUpdate = true;
+}
+function selectTab(name) {
+  state.tab = name;
+  $('#tabs .on')?.classList.remove('on');
+  $(`#tabs [data-tab="${name}"]`)?.classList.add('on');
+  $('#tabs').querySelectorAll('[role="tab"]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === name ? 'true' : 'false'));
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-' + name));
+  if (name === 'dynamic' && state.tier?.id === 'M1') setDynamicStep(state.dynamicStep); else { stopDynamic(); resetDynamicProjection(); }
 }
 
 // ------------------------------------------------------------------ charts (plain SVG)
@@ -350,11 +485,15 @@ function renderScale(pane) {
 }
 
 // ------------------------------------------------------------------ tabs & boot
-$('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; $('#tabs .on')?.classList.remove('on'); b.classList.add('on'); document.querySelectorAll('.pane').forEach(p => p.classList.toggle('on', p.id === 'pane-' + b.dataset.tab)); });
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; selectTab(b.dataset.tab); renderFrame(state.tier); });
 (async function boot() {
   try {
-    const data = await fetch('data/tiers.json').then(r => { if (!r.ok) throw new Error(`tiers.json HTTP ${r.status}`); return r.json(); });
-    state.data = data; $('#topMeta').textContent = `male-cns:v1.0 · neuprint · 数据生成于 ${data.generated}`;
-    await showTier('T0');
+    const [data, dynamic] = await Promise.all([
+      fetch('data/tiers.json').then(r => { if (!r.ok) throw new Error(`tiers.json HTTP ${r.status}`); return r.json(); }),
+      fetch('data/dynamics.json').then(r => { if (!r.ok) throw new Error(`dynamics.json HTTP ${r.status}`); return r.json(); })
+    ]);
+    state.data = data; state.dynamic = dynamic;
+    $('#topMeta').textContent = `70M dynamics · ${dynamic.verification.verification_passed ? 'verified' : 'unverified'} · ${data.generated}`;
+    await showTier('M1'); selectTab('dynamic'); renderFrame(state.tier);
   } catch (e) { console.error(e); setLoading(`数据载入失败：${e.message}`); }
 })();
