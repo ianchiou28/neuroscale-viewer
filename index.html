@@ -20,6 +20,10 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outlin
 .brand{display:flex;align-items:baseline;gap:12px;min-width:0}
 .brand-name{font:700 20px/1 var(--font-display);letter-spacing:.02em;color:var(--accent)}
 .brand-sub{font-size:13px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top-links{display:flex;align-items:center;gap:16px}
+.top-links a{color:var(--accent);white-space:nowrap;text-underline-offset:3px;font-size:14px}
+.top-links a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+@media (max-width:650px){.top-meta{display:none}.top-links{gap:12px}}
 .top-meta{font:12px var(--font-mono);color:var(--ink3);white-space:nowrap}
 .app{display:grid;grid-template-columns:232px minmax(0,1fr) 410px;height:calc(100vh - 52px);min-height:520px}
 .rail{border-right:1px solid var(--line);background:var(--bg2);overflow:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
@@ -149,7 +153,7 @@ table.stats td.v.hi{color:var(--accent)}
 
 <header class="top">
   <div class="brand"><span class="brand-name">NeuroScale</span><span class="brand-sub">70M 小鼠级神经系统 · 全量动态运行与 3D 结构</span></div>
-  <div class="top-meta" id="topMeta">male-cns:v1.0 · neuprint</div>
+  <nav class="top-links" aria-label="研究导航"><a href="research/">研究进展</a><a href="report/">推演报告</a><span class="top-meta" id="topMeta">male-cns:v1.0 · neuprint</span></nav>
 </header>
 <div class="app">
   <nav class="rail" id="rail" aria-label="层级"></nav>
