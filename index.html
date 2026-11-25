@@ -41,6 +41,12 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--accent2);outlin
 .scale-strip summary{width:fit-content;cursor:pointer}
 .scale-strip svg{width:100%;max-width:190px;height:auto;display:block;margin-top:.35rem}
 .stage{position:relative;background:var(--viewer-canvas);overflow:hidden;min-height:480px;height:clamp(480px,65vh,690px)}
+html.viewer-expanded{overflow:hidden}
+.stage:fullscreen,.stage.stage-expanded{width:100%;height:100%;max-width:none;max-height:none;min-height:0}
+.stage.stage-expanded{position:fixed;inset:0;z-index:20}
+.stage-tools{display:grid;justify-items:end;gap:7px}
+.stage-expand{min-height:36px;padding:4px 10px;border:1px solid var(--line2);border-radius:4px;background:var(--sheet);color:var(--accent);font-weight:650;cursor:pointer}
+.stage-expand:hover{background:var(--selected);border-color:var(--accent)}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block}
 .hud{position:absolute;pointer-events:none;max-width:52%}
 .hud > *{pointer-events:auto}
@@ -152,7 +158,8 @@ table.stats td.v.hi{color:var(--accent)}
   .hud-tl,.hud-bl{left:8px}
   .hud-tr,.hud-br{right:8px}
   .hud-title{font-size:1rem}
-  .hud-tr{max-width:66%}
+  .hud-tl{max-width:37%}
+  .hud-tr{max-width:62%}
   .ctl{padding:6px 8px;font-size:11px}
   .ctl .row{gap:5px}
   .scale-strip{margin-top:.2rem}
@@ -177,10 +184,13 @@ table.stats td.v.hi{color:var(--accent)}
 </header>
 <div class="app">
   <nav class="rail" id="rail" aria-label="层级"></nav>
-  <section class="stage" id="stage">
+  <section class="stage" id="stage" aria-label="神经网络视图">
     <canvas id="gl" aria-label="三维网络视图"></canvas>
     <div class="hud hud-tl" id="hudTitle"></div>
-    <div class="hud hud-tr" id="hudCtl"></div>
+    <div class="hud hud-tr stage-tools">
+      <button type="button" class="stage-expand" id="stageExpand" aria-controls="stage" aria-expanded="false">全屏查看</button>
+      <div id="hudCtl"></div>
+    </div>
     <div class="hud hud-bl" id="hudLegend"></div>
     <div class="hud hud-br" id="hudFrame"></div>
     <div class="loading" id="loading">载入数据…</div>
@@ -220,7 +230,7 @@ table.stats td.v.hi{color:var(--accent)}
 <nav class="footer-nav" aria-label="页底导航"><a href="research/records/">实验记录</a><a href="#main">回到正文开头</a></nav>
 </div></footer>
 <div class="tip" id="tip" hidden></div>
-<script type="module" src="app.js?v=paper"></script>
+<script type="module" src="app.js?v=fullscreen"></script>
 
 </body>
 </html>

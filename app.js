@@ -55,6 +55,55 @@ async function loadEdges(url) {
 
 // ------------------------------------------------------------------ scene
 const stage = $('#stage'), canvas = $('#gl');
+const stageExpand = $('#stageExpand');
+const viewerSurroundings = document.querySelectorAll('.skip-link, .site-header, .viewer-intro, .rail, .panel, .site-footer');
+let expandedInPage = false;
+let changingFullscreen = false;
+
+function syncExpandedView() {
+  const expanded = expandedInPage || document.fullscreenElement === stage;
+  stage.classList.toggle('stage-expanded', expandedInPage);
+  document.documentElement.classList.toggle('viewer-expanded', expanded);
+  for (const element of viewerSurroundings) element.inert = expanded;
+  stageExpand.setAttribute('aria-expanded', String(expanded));
+  stageExpand.textContent = expanded ? '退出全屏' : '全屏查看';
+}
+
+stageExpand.addEventListener('click', async () => {
+  if (changingFullscreen) return;
+  if (expandedInPage) {
+    expandedInPage = false;
+    syncExpandedView();
+    return;
+  }
+
+  changingFullscreen = true;
+  try {
+    if (document.fullscreenElement === stage) {
+      await document.exitFullscreen();
+    } else if (document.fullscreenEnabled && typeof stage.requestFullscreen === 'function') {
+      try {
+        await stage.requestFullscreen();
+      } catch {
+        expandedInPage = true;
+      }
+    } else {
+      expandedInPage = true;
+    }
+  } finally {
+    changingFullscreen = false;
+    syncExpandedView();
+    stageExpand.focus({ preventScroll: true });
+  }
+});
+
+document.addEventListener('fullscreenchange', syncExpandedView);
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape' || !expandedInPage) return;
+  expandedInPage = false;
+  syncExpandedView();
+  stageExpand.focus({ preventScroll: true });
+});
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 renderer.setClearColor(getComputedStyle(stage).getPropertyValue('--viewer-canvas').trim(), 1);
