@@ -58,7 +58,6 @@ const stage = $('#stage'), canvas = $('#gl');
 const stageExpand = $('#stageExpand');
 const viewerSurroundings = document.querySelectorAll('.skip-link, .site-header, .viewer-intro, .rail, .panel, .site-footer');
 let expandedInPage = false;
-let changingFullscreen = false;
 
 function syncExpandedView() {
   const expanded = expandedInPage || document.fullscreenElement === stage;
@@ -70,14 +69,14 @@ function syncExpandedView() {
 }
 
 stageExpand.addEventListener('click', async () => {
-  if (changingFullscreen) return;
+  if (stageExpand.disabled) return;
   if (expandedInPage) {
     expandedInPage = false;
     syncExpandedView();
     return;
   }
 
-  changingFullscreen = true;
+  stageExpand.disabled = true;
   try {
     if (document.fullscreenElement === stage) {
       await document.exitFullscreen();
@@ -91,7 +90,7 @@ stageExpand.addEventListener('click', async () => {
       expandedInPage = true;
     }
   } finally {
-    changingFullscreen = false;
+    stageExpand.disabled = false;
     syncExpandedView();
     stageExpand.focus({ preventScroll: true });
   }
