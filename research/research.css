@@ -18,32 +18,19 @@ img { display: block; max-width: 100%; }
 .section-nav a { padding: .1rem 0; font-size: .9rem; color: var(--muted); text-decoration: none; white-space: nowrap; }
 .section-nav a:hover, .section-nav a:focus-visible { color: var(--accent); text-decoration: underline; }
 .chapter, .sources { padding-block: clamp(2.15rem, 4.5vw, 3.6rem); scroll-margin-top: 3.2rem; }
-#comparison { scroll-margin-top: 4.75rem; }
 .chapter + .chapter, .sources { border-top: 1px solid var(--rule); }
 .refs { display: flex; flex-wrap: wrap; gap: .3rem 1.15rem; color: var(--muted); font-size: .9rem; }
 .chapter-copy .refs, .sources .refs { margin-top: .9rem; }
 .plate { min-width: 0; margin-top: 1.32rem; padding: 1rem clamp(.75rem, 2.3vw, 1.4rem) .82rem; background: var(--sheet); border-block: 1px solid var(--rule); }
 .plate-head, .plate-caption { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .35rem 1rem; }
 .plate-head { margin-bottom: .77rem; }
-.plate-head a, .plate-note { font-size: .875rem; }
-.plate-note, .plate-caption { color: var(--muted); }
+.plate-head a { font-size: .875rem; }
+.plate-caption { color: var(--muted); }
 .plate img { width: 100%; height: auto; margin-inline: auto; }
 .plot-image img { max-width: 46rem; }
 .plate-caption { border-top: 1px solid var(--rule); margin-top: .8rem; padding-top: .62rem; font: .875rem/1.65 var(--sans); }
-.plate-pair, .comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.plate-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .plate-pair { align-items: start; }
-.comparison-panel { --comparison-label: minmax(5.2rem, 7.9rem); --comparison-value: 3.35rem; min-width: 0; border: 1px solid var(--rule); padding: .68rem .65rem; background: var(--paper); }
-.comparison-panel h4 { margin: 0 0 .42rem; font-size: .91rem; }
-.comparison-values { display: grid; grid-template-columns: var(--comparison-label) minmax(0, 1fr) var(--comparison-value); gap: .28rem .58rem; margin: 0; align-items: center; }
-.comparison-values dt, .comparison-values dd { margin: 0; font-size: .86rem; }
-.comparison-values dd { display: grid; grid-column: 2 / 4; grid-template-columns: minmax(0, 1fr) var(--comparison-value); gap: .58rem; align-items: center; }
-.axis-row { display: grid; grid-template-columns: var(--comparison-label) minmax(0, 1fr) var(--comparison-value); gap: .58rem; color: var(--muted); font: .76rem/1.5 var(--mono); }
-.axis-text { grid-column: 2; display: flex; justify-content: space-between; }
-.track { position: relative; display: block; height: .55rem; background: var(--wash); border-radius: 2px; }
-.track::before { content: ""; position: absolute; left: 50%; inset-block: -.15rem; width: 1px; background: var(--rule-strong); }
-.track i { position: absolute; height: 100%; left: var(--start); width: var(--spread); background: var(--positive); border-radius: 2px; }
-.track i.negative { background: var(--negative); }
-.plot-number { text-align: right; font: 600 .84rem/1.65 var(--mono); font-variant-numeric: tabular-nums; }
 .sources .note, .note { margin-top: 1.1rem; padding: .55rem .85rem; background: var(--wash); border-left: 2px solid var(--rule-strong); color: var(--muted); font: .91rem/1.72 var(--sans); }
 
 .records-main { padding-bottom: 3.5rem; }
@@ -76,13 +63,9 @@ img { display: block; max-width: 100%; }
 .record-body th { background: var(--wash); }
 @media (max-width: 740px) {
   .section-nav { gap: .2rem .85rem; }
-  .chapter, .sources, #comparison { scroll-margin-top: 6rem; }
-  .plate-pair, .comparison-grid { grid-template-columns: 1fr; gap: .7rem; }
-  .plate-pair { gap: 0; }
+  .chapter, .sources { scroll-margin-top: 6rem; }
+  .plate-pair { grid-template-columns: 1fr; gap: 0; }
 }
 @media (max-width: 390px) {
-  .comparison-panel { --comparison-label: minmax(4.95rem, 6.3rem); --comparison-value: 3.05rem; }
-  .axis-row, .comparison-values, .comparison-values dd { column-gap: .4rem; }
-  .comparison-values dt { font-size: .8rem; }
   .section-nav a { font-size: .86rem; }
 }
