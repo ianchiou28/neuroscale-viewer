@@ -3,27 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f6ef">
 <meta name="description" content="NeuroScale 的行为实验、动物参照、全尺度动力学与精确推理测量，附图表和研究记录。">
 <title>研究进展 · NeuroScale</title>
-<link rel="stylesheet" href="research.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="research.css?v=paper">
 </head>
 <body>
-<header class="mast"><div class="shell mast-inner">
-<a class="brand" href="../">NeuroScale</a>
-<nav aria-label="站点导航"><a href="../">3D 查看器</a><a href="../report/">早期报告</a><a href="records/">实验记录</a></nav>
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header"><div class="site-frame">
+<a class="wordmark" href="../research/"><strong>NeuroScale</strong><span>研究记录</span></a>
+<nav class="site-nav" aria-label="站点导航"><a href="../research/" aria-current="page">研究进展</a> <a href="../research/records/">实验记录</a> <a href="../report/">推演报告</a> <a href="../">3D 查看器</a></nav>
 </div></header>
-<main class="shell">
-<section class="hero" aria-labelledby="page-title">
-<div>
-<p class="kicker">NeuroScale 研究记录</p>
-<h1 id="page-title">从连接结构到<br>可检验的行为</h1>
-<p class="lead">从雄性果蝇连接组出发，研究合成网络的结构与动力学，再通过闭环任务、真实小鼠参照和对照实验检验模型行为。</p>
-<div class="hero-links"><a class="button" href="#behavior">查看行为实验</a><a class="text-link" href="records/">浏览全部研究记录</a></div>
-</div>
-<figure class="hero-figure"><img src="figures/whole-brain.png" alt="研究中使用的全尺度合成小鼠图背侧与侧面投影，节点按脑区着色" fetchpriority="high"><figcaption>全尺度合成小鼠图的背侧和侧面投影</figcaption></figure>
-</section>
+<main class="article-frame" id="main">
+<header class="article-intro">
+<h1 id="page-title">从连接结构到可检验的行为</h1>
+<p class="subtitle">果蝇连接组、全尺度模拟与闭环决策实验</p>
+<p class="article-meta"><time datetime="2026-11-25">2026 年 11 月 25 日</time><a href="records/">查看实验记录</a></p>
+<div class="abstract"><p>从雄性果蝇连接组出发，研究合成网络的结构与动力学，再通过闭环任务、真实小鼠参照和对照实验检验模型行为。精确推理实验考察在保留固定控制器决策时，可以省去哪些计算。</p></div>
+</header>
 
-<nav class="section-nav" aria-label="本页目录"><a href="#behavior">行为实验</a><a href="#animal">动物参照</a><a href="#scale">结构与动力学</a><a href="#inference">推理效率</a><a href="#sources">记录与数据</a></nav>
+<nav class="section-nav" aria-label="本页目录"><a href="#behavior">行为实验</a><a href="#comparison">对照结果</a><a href="#animal">动物参照</a><a href="#scale">结构与动力学</a><a href="#inference">推理效率</a><a href="#sources">记录与数据</a></nav>
 
 <section class="chapter" id="behavior">
 <div class="chapter-copy"><h2>行为实验</h2>
@@ -31,11 +31,42 @@
 <p>随后用 IBL 的刺激排程构造隐藏先验任务。模型依据当前感觉与自身过去的动作、奖励作答，奖励学习只更新读出，图内权重固定。三类循环图在十组新种子上约 <strong>84.6%</strong>；关闭历史输入路径后整体准确率下降 <strong>1.44–1.74 个百分点</strong>。复验沿用相同校准评估鼠。</p>
 <p>同资源混合输入的小规模对照均值提升 1.82 个百分点，低于预设 3 个百分点门槛。后续五项架构优势比较均未达到完整判据，较简单的指数历史模型和双速率历史模型在主要弱证据指标上得分更高。</p>
 <p class="refs"><a href="records/#r16">闭环任务与重放</a><a href="records/#r17">循环边对照</a><a href="records/#r49">新种子与资源对照</a><a href="records/#r54">五项完整比较</a></p></div>
-<div class="figures">
-<figure><a href="figures/reversal.png"><img src="figures/reversal.png" loading="lazy" alt="合成任务反转后，通用循环模型的奖励率从前100次11.0%升至最后100次96.8%"></a><figcaption>反转前末段、反转后前段与末段各 100 次的训练奖励率，含探索。</figcaption></figure>
-<figure><a href="figures/architecture.png"><img src="figures/architecture.png" loading="lazy" alt="双状态与五个对照的弱证据准确率差值，五项综合判据均未通过"></a><figcaption>双状态模型减去每个对照的弱证据准确率。完整门槛还包含冲击交互、偏向等指标。</figcaption></figure>
-<figure><a href="figures/history-gate.png"><img src="figures/history-gate.png" loading="lazy" alt="十个种子的历史读出增益扫描，显示弱证据正确率与绝对区块偏向"></a><figcaption>冻结检查点的五档历史读出增益扫描，每类图十个种子。零增益仍保留历史状态更新。</figcaption></figure>
-<figure><a href="figures/state-separation.png"><img src="figures/state-separation.png" loading="lazy" alt="感觉与历史路径分离、共用固定循环图的示意及对照结果"></a><figcaption>原图 · 感觉状态在每轮重置，历史状态跨轮持续。</figcaption></figure>
+<figure class="plate plot-image">
+<div class="plate-head"><h3>规则反转前后的奖励率</h3><a href="figures/reversal.png?v=paper" aria-label="查看原图：规则反转前后的奖励率">查看原图</a></div>
+<img src="figures/reversal.png?v=paper" alt="合成任务反转后，通用循环模型的奖励率从前100次11.0%升至最后100次96.8%" loading="lazy" decoding="async">
+<figcaption class="plate-caption">反转前末段、反转后前段与末段各 100 次的训练奖励率，含探索。</figcaption>
+</figure>
+<figure class="plate" id="comparison" aria-labelledby="comparison-title">
+<div class="plate-head"><div><h3 id="comparison-title">双状态模型与五种对照</h3><p class="plate-note">每项为十对种子的均值，单位为百分点。</p></div><a href="figures/architecture.png?v=paper" aria-label="查看双状态模型对照原图">查看原图</a></div>
+<div class="comparison-grid">
+<section class="comparison-panel"><h4>弱证据准确率差</h4><div class="axis-row" aria-hidden="true"><span class="axis-text"><span>−12</span><span>0</span><span>+12</span></span></div><dl class="comparison-values">
+<dt>混合双状态</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:2.160%"></i></span><span class="plot-number">+0.52</span></dd>
+<dt>单状态</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:48.063%"></i></span><span class="plot-number">+11.54</span></dd>
+<dt>单状态加直接证据</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:8.951%"></i></span><span class="plot-number">+2.15</span></dd>
+<dt>单速率指数历史</dt><dd><span class="track" aria-hidden="true"><i class="negative" style="--start:41.771%;--spread:8.229%"></i></span><span class="plot-number">−1.98</span></dd>
+<dt>双速率历史</dt><dd><span class="track" aria-hidden="true"><i class="negative" style="--start:35.838%;--spread:14.162%"></i></span><span class="plot-number">−3.40</span></dd>
+</dl></section>
+<section class="comparison-panel"><h4>感觉冲击的交互效应</h4><div class="axis-row" aria-hidden="true"><span class="axis-text"><span>−0.6</span><span>0</span><span>+0.6</span></span></div><dl class="comparison-values">
+<dt>混合双状态</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:7.536%"></i></span><span class="plot-number">+0.09</span></dd>
+<dt>单状态</dt><dd><span class="track" aria-hidden="true"><i class="negative" style="--start:35.763%;--spread:14.237%"></i></span><span class="plot-number">−0.17</span></dd>
+<dt>单状态加直接证据</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:41.215%"></i></span><span class="plot-number">+0.49</span></dd>
+<dt>单速率指数历史</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:1.026%"></i></span><span class="plot-number">+0.01</span></dd>
+<dt>双速率历史</dt><dd><span class="track" aria-hidden="true"><i style="--start:50.000%;--spread:27.490%"></i></span><span class="plot-number">+0.33</span></dd>
+</dl></section>
+</div>
+<figcaption class="plate-caption"><span>正值表示双状态模型相对对照的差为正。右图显示额外感觉冲击对该差值的影响，两图采用各自的标度。五个对照均未通过完整判据。</span><a href="records/#r54">完整比较记录</a></figcaption>
+</figure>
+<div class="plate-pair">
+<figure class="plate plot-image">
+<div class="plate-head"><h3>历史读出增益与行为变化</h3><a href="figures/history-gate.png?v=paper" aria-label="查看原图：历史读出增益与行为变化">查看原图</a></div>
+<img src="figures/history-gate.png?v=paper" alt="十个种子的历史读出增益扫描，显示弱证据正确率与绝对区块偏向" loading="lazy" decoding="async">
+<figcaption class="plate-caption">冻结检查点的五档历史读出增益扫描，每类图十个种子。零增益仍保留历史状态更新。</figcaption>
+</figure>
+<figure class="plate">
+<div class="plate-head"><h3>感觉路径与历史路径</h3><a href="figures/state-separation.png" aria-label="查看原图：感觉路径与历史路径">查看原图</a></div>
+<img src="figures/state-separation.png" alt="感觉与历史路径分离、共用固定循环图的示意及对照结果" loading="lazy" decoding="async">
+<figcaption class="plate-caption">感觉状态在每轮重置，历史状态跨轮持续。</figcaption>
+</figure>
 </div>
 </section>
 
@@ -45,10 +76,22 @@
 <p>开源视觉模块 O0a、O0b 和 IBL 像素行为候选 B1 已完成各自的留出验证。B1 覆盖 27 只鼠、95 场会话；同一任务的 70M 单图十种子校准均值为 <strong>71.94%</strong>，其中九个种子低于 75% 门槛。</p>
 <p>Allen 遗漏子实验在 6 只留出鼠上通过行为门，直接像素基线也通过。随后另一组 6 只鼠的 B2-local 候选得到 <strong>8.610/17</strong> 行为分，即使按未测神经分满分计，其总分上界仍只有 <strong>16.610/25</strong>。后续校准审计显示，整张图像身份留出后，低阶像素读出得到 20/40 场（50%）的准确率，全部判为熟悉。B3 的低成本短筛选未达到晋级门槛，完整规模干预未执行。最终测试继续封存。</p>
 <p class="refs"><a href="records/#r21">IBL 动物参照</a><a href="records/#r36">开放评测</a><a href="records/#r42">阶段核验</a><a href="records/#r43">B2-local 上界</a><a href="records/#r47">刺激身份审计</a></p></div>
-<div class="figures">
-<figure><a href="figures/ibl-adaptation.png"><img src="figures/ibl-adaptation.png" loading="lazy" alt="五个时间窗的标准化选择率和区间，分别有76、19、53、65和67只动物"></a><figcaption>各时间窗标准化选择新常见侧的比例。误差线为动物重采样 95% 区间，窗口内动物集合不同。</figcaption></figure>
-<figure><a href="figures/ibl-baseline.png"><img src="figures/ibl-baseline.png" loading="lazy" alt="IBL 选择预测基线的对比度与行为响应曲线"></a><figcaption>原图 · IBL 行为选择及拟合基线。</figcaption></figure>
-<figure><a href="figures/stimulus-overlap.png"><img src="figures/stimulus-overlap.png" loading="lazy" alt="Allen 小鼠研究的刺激身份重合与样本分组审计图"></a><figcaption>原图 · 小鼠主体留出与视觉刺激身份留出的差别。</figcaption></figure>
+<figure class="plate plot-image">
+<div class="plate-head"><h3>真实小鼠在区块切换后的选择</h3><a href="figures/ibl-adaptation.png?v=paper" aria-label="查看原图：真实小鼠在区块切换后的选择">查看原图</a></div>
+<img src="figures/ibl-adaptation.png?v=paper" alt="五个时间窗的标准化选择率和区间，分别有76、19、53、65和67只动物" loading="lazy" decoding="async">
+<figcaption class="plate-caption">各时间窗标准化选择新常见侧的比例。误差线为动物重采样 95% 区间，窗口内动物集合不同。</figcaption>
+</figure>
+<div class="plate-pair">
+<figure class="plate">
+<div class="plate-head"><h3>刺激对比度和选择概率</h3><a href="figures/ibl-baseline.png" aria-label="查看原图：刺激对比度和选择概率">查看原图</a></div>
+<img src="figures/ibl-baseline.png" alt="IBL 选择预测基线的对比度与行为响应曲线" loading="lazy" decoding="async">
+<figcaption class="plate-caption">IBL 行为选择及拟合基线。</figcaption>
+</figure>
+<figure class="plate">
+<div class="plate-head"><h3>小鼠主体与刺激身份留出</h3><a href="figures/stimulus-overlap.png" aria-label="查看原图：小鼠主体与刺激身份留出">查看原图</a></div>
+<img src="figures/stimulus-overlap.png" alt="Allen 小鼠研究的刺激身份重合与样本分组审计图" loading="lazy" decoding="async">
+<figcaption class="plate-caption">小鼠主体留出与视觉刺激身份留出的差别。</figcaption>
+</figure>
 </div>
 </section>
 
@@ -57,10 +100,27 @@
 <p>原始果蝇连接组库含 176,422 个神经元节点；早期报告的主要全图统计使用其中 165,122 个已追踪节点。结构部分还包括同规模生成对照、损毁敏感性、全尺度合成小鼠的基线核验，以及用 MICrONS 观测连接建立的局部模型。类型条件改善了部分连接统计，但距离误差和拓扑能力证据仍有限。</p>
 <p>合成小鼠全图包含 <strong>70,999,999 个节点、2,827,324,172 条有向边</strong>。工程快慢状态运行推进 100 步，终态活动率 1.452%，峰值显存 5.633 GiB，并完成检查点恢复。后续混合动力学在约 1,370 万皮层节点引入局部校准的 VISp 风格动力学，非皮层仍运行工程模型。全量迁移和独立核验通过，证据覆盖模拟运行与数值重放。</p>
 <p class="refs"><a href="../report/">早期结构推演与原图</a><a href="../">交互式 3D 与动态回放</a><a href="records/#r05">全尺度结构核验</a><a href="records/#r28">快慢动力学</a><a href="records/#r34">混合动力学</a></p></div>
-<div class="figures">
-<figure><a href="figures/scale-activity.png"><img src="figures/scale-activity.png" loading="lazy" alt="全尺度快慢动力学100步中的活动节点比例，终态为1.452%"></a><figcaption>全量快慢动力学的 100 步活动轨迹。</figcaption></figure>
-<figure><a href="figures/scale-lesions.png"><img src="figures/scale-lesions.png" loading="lazy" alt="全尺度合成小鼠网络在不同损毁条件下的对照"></a><figcaption>原图 · 全尺度合成网络的损毁对照。</figcaption></figure>
-<figure><a href="figures/scale-modules.png"><img src="figures/scale-modules.png" loading="lazy" alt="全尺度合成小鼠结构中各模块的节点规模和网络统计"></a><figcaption>原图 · 全尺度结构的模块核验。</figcaption></figure>
+<figure class="plate">
+<div class="plate-head"><h3>全尺度小鼠图的背侧与侧面投影</h3><a href="figures/whole-brain.png" aria-label="查看原图：全尺度小鼠图的背侧与侧面投影">查看原图</a></div>
+<img src="figures/whole-brain.png" alt="全尺度合成小鼠图背侧与侧面投影，节点按脑区着色" loading="lazy" decoding="async">
+<figcaption class="plate-caption">图中为模型抽样节点和连接，颜色区分解剖模块。</figcaption>
+</figure>
+<figure class="plate plot-image">
+<div class="plate-head"><h3>全量快慢动力学的活动轨迹</h3><a href="figures/scale-activity.png?v=paper" aria-label="查看原图：全量快慢动力学的活动轨迹">查看原图</a></div>
+<img src="figures/scale-activity.png?v=paper" alt="全尺度快慢动力学100步中的活动节点比例，终态为1.452%" loading="lazy" decoding="async">
+<figcaption class="plate-caption">每步 10 ms。100 步后活动节点占全图 1.452%。</figcaption>
+</figure>
+<div class="plate-pair">
+<figure class="plate">
+<div class="plate-head"><h3>不同损毁条件的效率变化</h3><a href="figures/scale-lesions.png" aria-label="查看原图：不同损毁条件的效率变化">查看原图</a></div>
+<img src="figures/scale-lesions.png" alt="全尺度合成小鼠网络在不同损毁条件下的对照" loading="lazy" decoding="async">
+<figcaption class="plate-caption">不同切除方式下的效率与路径指标，包含抽样不确定性。</figcaption>
+</figure>
+<figure class="plate">
+<div class="plate-head"><h3>各模块的平均有向路径</h3><a href="figures/scale-modules.png" aria-label="查看原图：各模块的平均有向路径">查看原图</a></div>
+<img src="figures/scale-modules.png" alt="全尺度合成小鼠结构中各模块的节点规模和网络统计" loading="lazy" decoding="async">
+<figcaption class="plate-caption">从不同解剖模块抽样的源点用于估计有向路径长度。</figcaption>
+</figure>
 </div>
 </section>
 
@@ -70,19 +130,30 @@
 <p>单线程受控计时中，在输入已压缩的条件下，依赖裁剪的配对中位加速为 <strong>1.46×</strong>。组合优化对优化后稠密参照为 <strong>1.61×</strong>，对原始内核为 <strong>4.08×</strong>。三个数字各有自己的比较基线。一般化图报告的是保留边贡献比例，计时结论来自固定任务案例。</p>
 <p>另测了计划准备开销。十个距离图种子上，完整路径和裁剪路径的准备耗时中位数分别为 <strong>0.753 ms</strong> 和 <strong>0.871 ms</strong>；逐种子配对后的额外准备耗时中位数为 <strong>0.120 ms</strong>。十个种子的估计摊销点均为 1 个试次，采用同批完整运行的平均试次成本计算。</p>
 <p class="refs"><a href="records/#r56">准备开销与摊销</a><a href="records/#r53">门控与历史对照</a><a href="records/#r54">精确依赖裁剪</a><a href="records/#r55">受控推理测量</a></p></div>
-<div class="figures">
-<figure><a href="figures/dependency.png"><img src="figures/dependency.png" loading="lazy" alt="全脑侧视图、固定循环控制器状态流程和依赖裁剪实例"></a><figcaption>原图 · 全尺度图渲染、控制器状态流和依赖裁剪示例。</figcaption></figure>
-<figure><a href="figures/generality.png"><img src="figures/generality.png" loading="lazy" alt="不同阶段数和连接密度下保留的循环边贡献比例"></a><figcaption>原图 · 不同阶段与连接度下的依赖工作量。</figcaption></figure>
+<div class="plate-pair">
+<figure class="plate">
+<div class="plate-head"><h3>状态更新与感觉支路的依赖裁剪</h3><a href="figures/dependency.png" aria-label="查看原图：状态更新与感觉支路的依赖裁剪">查看原图</a></div>
+<img src="figures/dependency.png" alt="全脑侧视图、固定循环控制器状态流程和依赖裁剪实例" loading="lazy" decoding="async">
+<figcaption class="plate-caption">全尺度图渲染、控制器状态流和依赖裁剪示例。</figcaption>
+</figure>
+<figure class="plate">
+<div class="plate-head"><h3>阶段、连接度与保留的计算量</h3><a href="figures/generality.png" aria-label="查看原图：阶段、连接度与保留的计算量">查看原图</a></div>
+<img src="figures/generality.png" alt="不同阶段数和连接密度下保留的循环边贡献比例" loading="lazy" decoding="async">
+<figcaption class="plate-caption">不同阶段与连接度下的依赖工作量。</figcaption>
+</figure>
 </div>
 </section>
 
 <section class="sources" id="sources">
 <h2>记录与数据</h2>
 <p>实验记录包括方法、已完成的测量、失败版本和对应的核验范围。记录按原实验时间保留，正文中的阶段计划会注明其当时状态。</p>
-<div class="hero-links"><a class="button" href="records/">打开研究记录</a><a class="text-link" href="data/experiment-summary.json">汇总数据 JSON</a><a class="text-link" href="data/synthetic-trial-example.json">合成逐试次样例 JSON</a><a class="text-link" href="data/synthetic-trials.zip">40 组合成轨迹 ZIP</a></div>
+<div class="refs"><a href="records/">打开研究记录</a><a href="data/experiment-summary.json">汇总数据 JSON</a><a href="data/synthetic-trial-example.json">合成逐试次样例 JSON</a><a href="data/synthetic-trials.zip">40 组合成轨迹 ZIP</a></div>
 <p class="note">截至此次更新，项目内没有记录到已运行的果蝇气味条件反射实验。真实动物数据用于行为参照与评分，本项目的闭环轨迹由模型产生。</p>
 </section>
 </main>
-<footer class="footer"><div class="shell"><span>NeuroScale</span><time datetime="2026-11-25">2026-11-25 更新</time></div></footer>
+<footer class="site-footer"><div class="site-frame">
+<a class="wordmark" href="../research/"><strong>NeuroScale</strong></a>
+<nav class="footer-nav" aria-label="页底导航"><a href="../research/records/">实验记录</a><a href="#main">回到正文开头</a></nav>
+</div></footer>
 </body>
 </html>

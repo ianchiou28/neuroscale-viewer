@@ -11,7 +11,7 @@ const fmtInt = n => isNum(n) ? nf.format(Math.round(n)) : '—';
 const fmtSci = n => { if (!isNum(n)) return '—'; const a = Math.abs(n); if (a >= 1e5 || (a > 0 && a < 1e-2)) { const e = Math.floor(Math.log10(a)); return `${(n / 10 ** e).toFixed(2)}×10${sup(e)}`; } return a >= 100 ? nf.format(Math.round(n)) : String(+(+n).toFixed(2)); };
 const fmt = (n, d = 3) => isNum(n) ? (+n).toFixed(d) : '—';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const TIER_COLORS = { T0: '#f5b942', T1: '#7ed491', T2: '#6ec6ff', T3: '#c4b5fd', T3b: '#f0abfc', T3c: '#fda4af' };
+const TIER_COLORS = { T0: '#886337', T1: '#437961', T2: '#527b93', T3: '#766889', T3b: '#925776', T3c: '#a76053' };
 
 // ------------------------------------------------------------------ binary loaders (formats written by src/*.py)
 const bufCache = new Map();
@@ -56,7 +56,8 @@ async function loadEdges(url) {
 // ------------------------------------------------------------------ scene
 const stage = $('#stage'), canvas = $('#gl');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setClearColor(0x0b0f17, 1);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setClearColor(getComputedStyle(stage).getPropertyValue('--viewer-canvas').trim(), 1);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(42, 1, 1, 1e7);
 const controls = new OrbitControls(camera, canvas); controls.enableDamping = true; controls.dampingFactor = 0.08;
@@ -143,7 +144,7 @@ function addMesh(m, spec, list) {
 async function loadROIs(t) {
   if (state.roiLoaded || !t.roi?.length) return; state.roiLoaded = true;
   const tierId = t.id;
-  await Promise.all(t.roi.map(r => loadMesh(r.file).then(m => { if (state.tier?.id !== tierId) return; addMesh(m, { color: r.centroid[2] > 400 ? '#7ed491' : '#6ec6ff', opacity: 0.07 }, 'rois'); }).catch(e => console.warn(e))));
+  await Promise.all(t.roi.map(r => loadMesh(r.file).then(m => { if (state.tier?.id !== tierId) return; addMesh(m, { color: r.centroid[2] > 400 ? '#437961' : '#527b93', opacity: 0.07 }, 'rois'); }).catch(e => console.warn(e))));
 }
 function applyModuleVisibility() {
   const pts = state.objs.points; if (pts) { const vis = pts.geometry.getAttribute('vis'); const mmap = state.tier.module_map, mod = state.nodes.mod; for (let i = 0; i < vis.count; i++) vis.array[i] = state.modVis[mmap[mod[i]] ?? 0] ? 1 : 0; vis.needsUpdate = true; }
@@ -176,16 +177,16 @@ async function showTier(id) {
 // ------------------------------------------------------------------ UI: rail, hud, legend
 function renderRail() {
   const d = state.data;
-  $('#rail').innerHTML = `<h3>层级</h3>` + d.tiers.map(t => `<button class="tier ${t === state.tier ? 'on' : ''}" data-id="${t.id}">
+  $('#rail').innerHTML = `<h3>网络层级</h3><div class="tier-list">` + d.tiers.map(t => `<button class="tier ${t === state.tier ? 'on' : ''}" data-id="${t.id}" aria-pressed="${t === state.tier}">
       <div class="id">${t.id}</div><div class="nm">${esc(t.name)}</div>
       <div class="n">${fmtSci(t.N_true)} 神经元</div><span class="kind">${esc(t.kind)}</span></button>`).join('') +
-    `<div class="scale-strip"><h3>真实尺度（脑长，对数）</h3>${scaleStrip(d.tiers)}</div>`;
+    `</div><details class="scale-strip"><summary>真实尺度（脑长，对数）</summary>${scaleStrip(d.tiers)}</details>`;
   $('#rail').querySelectorAll('.tier').forEach(b => b.addEventListener('click', () => showTier(b.dataset.id)));
 }
 function scaleStrip(tiers) {
   const W = 200, rowH = 18, lens = tiers.map(t => t.brain_length_mm), lmax = Math.log10(Math.max(...lens) * 1.3), lmin = Math.log10(0.5);
   const rows = tiers.map((t, i) => { const w = (Math.log10(t.brain_length_mm) - lmin) / (lmax - lmin) * (W - 62); const y = i * rowH;
-    return `<rect x="0" y="${y + 4}" width="${w.toFixed(1)}" height="9" rx="2" fill="${TIER_COLORS[t.id]}" opacity=".85"/><text x="${(w + 5).toFixed(1)}" y="${y + 12}" font-size="9.5" fill="#9aa6bd" font-family="IBM Plex Mono,monospace">${t.id} ${t.brain_length_mm} mm</text>`; }).join('');
+    return `<rect x="0" y="${y + 4}" width="${w.toFixed(1)}" height="9" rx="2" fill="${TIER_COLORS[t.id]}" opacity=".85"/><text x="${(w + 5).toFixed(1)}" y="${y + 12}" font-size="9.5" fill="#536459" font-family="IBM Plex Mono,monospace">${t.id} ${t.brain_length_mm} mm</text>`; }).join('');
   return `<svg viewBox="0 0 ${W} ${tiers.length * rowH + 2}" role="img" aria-label="各层级脑长度对比">${rows}</svg>`;
 }
 function renderHudTitle(t, msg) {
@@ -279,7 +280,7 @@ function dynamicPlot(title, cap, series, { includeZero = false, valueFmt = v => 
   const lines = series.map(s => `<polyline fill="none" stroke="${s.color}" stroke-width="${s.width || 1.8}" ${s.dash ? 'stroke-dasharray="4 3"' : ''} points="${s.values.map((v, i) => `${X(i).toFixed(2)},${Y(v).toFixed(2)}`).join(' ')}"/>`).join('');
   const legend = series.length > 1 ? `<div class="lg">${series.map(s => `<span style="--c:${s.color}">${esc(s.name)}</span>`).join('')}</div>` : '';
   return `<div class="dynamic-chart"><h4>${esc(title)}</h4><div class="cap">${esc(cap)}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">
-    ${grid}${includeZero ? `<line x1="${L}" x2="${W - R}" y1="${Y(0).toFixed(2)}" y2="${Y(0).toFixed(2)}" stroke="#66738c"/>` : ''}${lines}
+    ${grid}${includeZero ? `<line x1="${L}" x2="${W - R}" y1="${Y(0).toFixed(2)}" y2="${Y(0).toFixed(2)}" stroke="#586960"/>` : ''}${lines}
     <line class="cursor" data-dynamic-cursor x1="${L}" x2="${L}" y1="${T}" y2="${H - B}"/>
     <rect class="hit" data-dynamic-hit x="${L}" y="${T}" width="${W - L - R}" height="${H - T - B}"/>
     <text class="axis" x="${L}" y="${H - 4}">10 ms</text><text class="axis" x="${W - R}" y="${H - 4}" text-anchor="end">1,000 ms 模型时间</text></svg>${legend}</div>`;
@@ -297,7 +298,7 @@ function renderDynamics(t) {
   const run = d.full_run, trace = run.trace, verify = d.verification, ladder = d.scale_ladder;
   const moduleOrder = run.interfaces.module_order;
   const moduleRows = moduleOrder.map((id, i) => {
-    const m = t.modules.find(x => x.id === id) || { label: id, color: '#9aa6bd' };
+    const m = t.modules.find(x => x.id === id) || { label: id, color: '#536459' };
     return `<div class="module-row" data-dynamic-module="${i}"><span class="name">${esc(m.label)}</span><div class="module-track"><div class="module-fill" style="width:0;background:${m.color}"></div></div><span class="rate">0.000%</span></div>`;
   }).join('');
   const gateRows = ladder.rows.map(r => `<tr><td>${r.nodes === run.graph.nodes ? '70M 全量' : fmtSci(r.nodes)}</td><td class="v">${fmtSci(r.nodes)}</td><td class="v">${fmtSci(r.edges_in_runtime)}</td><td class="v">${fmt(r.seconds_100_bins, 3)} s</td><td class="v">${fmt(r.peak_gpu_gib, 2)} GiB</td><td class="v pass">${r.passed ? '通过' : '未通过'}</td></tr>`).join('');
@@ -305,9 +306,9 @@ function renderDynamics(t) {
     <p class="dynamic-summary">这里回放的是后端全量运行的真实聚合轨迹。左侧 3D 脑图只把每个脑区的活动率投影到采样节点，不伪装成 70M 个逐神经元轨迹。</p>
     <div class="dynamic-controls"><div class="row"><button id="dynamicPlay" type="button">播放</button><input id="dynamicStep" type="range" min="0" max="${trace.length - 1}" value="${state.dynamicStep}" aria-label="动态步数"><span class="dynamic-time" id="dynamicTime">—</span></div>
       <div class="dynamic-readout" aria-live="polite"><div class="cell"><div class="key">活跃神经元</div><div class="val" id="dynActive">—</div></div><div class="cell"><div class="key">活跃比例</div><div class="val" id="dynFraction">—</div></div><div class="cell"><div class="key">本步调度连接</div><div class="val" id="dynEdges">—</div></div><div class="cell"><div class="key">动作差值 L−R</div><div class="val" id="dynAction">—</div></div></div></div>
-    ${dynamicPlot('全脑活跃比例', '每个 10 ms 时间箱中，绝对状态超过阈值的神经元比例。', [{ name: '活跃比例', color: '#7ed491', values: trace.map(r => r.active_neuron_fraction * 100) }], { valueFmt: v => v.toFixed(2) + '%' })}
-    ${dynamicPlot('快状态与慢状态', '全量 70,999,999 个状态槽的平均绝对值。', [{ name: '快状态', color: '#6ec6ff', values: trace.map(r => r.mean_abs_fast) }, { name: '慢状态', color: '#f5b942', values: trace.map(r => r.mean_abs_slow) }], { includeZero: true, valueFmt: v => v.toFixed(4) })}
-    ${dynamicPlot('动作读出差值', '工程接口 action_left − action_right；不等同于已经学会行为。', [{ name: '动作差值', color: '#f0abfc', values: trace.map(r => r.action_margin) }], { includeZero: true, valueFmt: v => v.toExponential(1) })}
+    ${dynamicPlot('全脑活跃比例', '每个 10 ms 时间箱中，绝对状态超过阈值的神经元比例。', [{ name: '活跃比例', color: '#437961', values: trace.map(r => r.active_neuron_fraction * 100) }], { valueFmt: v => v.toFixed(2) + '%' })}
+    ${dynamicPlot('快状态与慢状态', '全量 70,999,999 个状态槽的平均绝对值。', [{ name: '快状态', color: '#527b93', values: trace.map(r => r.mean_abs_fast) }, { name: '慢状态', color: '#886337', values: trace.map(r => r.mean_abs_slow) }], { includeZero: true, valueFmt: v => v.toFixed(4) })}
+    ${dynamicPlot('动作读出差值', '工程接口 action_left − action_right；不等同于已经学会行为。', [{ name: '动作差值', color: '#925776', values: trace.map(r => r.action_margin) }], { includeZero: true, valueFmt: v => v.toExponential(1) })}
     <h3>当前时间箱 · 各模块活跃源比例</h3><div class="note">按该模块的真实神经元数归一化；条形满刻度为 4%，3D 点亮强度使用同一组模块级比例。</div><div class="module-bars">${moduleRows}</div>
     <h3>规模阶梯</h3><table class="stats gate-table"><tr><th>门槛</th><th>神经元</th><th>运行内连接</th><th>100 箱耗时</th><th>GPU 峰值</th><th>状态</th></tr>${gateRows}</table>
     <h3>独立复核</h3><table class="stats"><tr><td>全量状态槽</td><td class="v">${fmtInt(run.graph.nodes)}</td></tr><tr><td>全图连接，无边界排除</td><td class="v">${fmtInt(run.graph.edges)}</td></tr><tr><td>fast / slow 检查点最大误差</td><td class="v">${verify.comparisons['fast.npy'].max_absolute_error} / ${verify.comparisons['slow.npy'].max_absolute_error}</td></tr><tr><td>delay queue 最大误差</td><td class="v">${fmtSci(verify.comparisons['delay_queue.npy'].max_absolute_error)}</td></tr><tr><td>峰值 GPU 已分配</td><td class="v">${fmt(run.execution.peak_gpu_allocated_gib, 2)} GiB</td></tr><tr><td>连续运行总耗时</td><td class="v">${fmt(run.execution.uninterrupted_seconds, 2)} s</td></tr></table>
@@ -409,14 +410,14 @@ function lineChart(el, { title, cap, series, xlog = true, ylog = true, xlab, yla
   const Y = v => T + (1 - (ylog ? (Math.log10(v) - Math.log10(ymin)) / (Math.log10(ymax) - Math.log10(ymin) || 1) : (v - ymin) / (ymax - ymin || 1))) * (H - T - B);
   const xt = xlog ? logTicks(xmin, xmax) : [xmin, (xmin + xmax) / 2, xmax];
   const yt = ylog ? logTicks(ymin, ymax) : [ymin, (ymin + ymax) / 2, ymax];
-  const grid = yt.map(v => `<line x1="${L}" x2="${W - R}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#243044" stroke-width="1"/><text x="${L - 6}" y="${(Y(v) + 3.5).toFixed(1)}" text-anchor="end" font-size="9.5" fill="#9aa6bd" font-family="IBM Plex Mono,monospace">${ylog ? '10' + sup(Math.round(Math.log10(v))) : yfmt(v)}</text>`).join('') +
-    xt.map(v => `<text x="${X(v).toFixed(1)}" y="${H - B + 14}" text-anchor="middle" font-size="9.5" fill="#9aa6bd" font-family="IBM Plex Mono,monospace">${xlog ? '10' + sup(Math.round(Math.log10(v))) : xfmt(v)}</text>`).join('');
+  const grid = yt.map(v => `<line x1="${L}" x2="${W - R}" y1="${Y(v).toFixed(1)}" y2="${Y(v).toFixed(1)}" stroke="#d5dccf" stroke-width="1"/><text x="${L - 6}" y="${(Y(v) + 3.5).toFixed(1)}" text-anchor="end" font-size="9.5" fill="#536459" font-family="IBM Plex Mono,monospace">${ylog ? '10' + sup(Math.round(Math.log10(v))) : yfmt(v)}</text>`).join('') +
+    xt.map(v => `<text x="${X(v).toFixed(1)}" y="${H - B + 14}" text-anchor="middle" font-size="9.5" fill="#536459" font-family="IBM Plex Mono,monospace">${xlog ? '10' + sup(Math.round(Math.log10(v))) : xfmt(v)}</text>`).join('');
   const paths = series.map((s, si) => { const d = s.pts.map((p, i) => `${i ? 'L' : 'M'}${X(p[0]).toFixed(1)},${Y(p[1]).toFixed(1)}`).join('');
     const dots = s.pts.map(p => `<circle cx="${X(p[0]).toFixed(1)}" cy="${Y(p[1]).toFixed(1)}" r="2.6" fill="${s.color}" data-s="${si}" data-x="${p[0]}" data-y="${p[1]}"/>`).join('');
     return `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width || 1.8}" ${s.dash ? 'stroke-dasharray="4 3"' : ''} opacity=".9"/>${dots}`; }).join('');
   el.innerHTML = `<h4>${title}</h4><div class="cap">${cap || ''}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${title}">
-    <line x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}" stroke="#2f3d55"/><line x1="${L}" x2="${L}" y1="${T}" y2="${H - B}" stroke="#2f3d55"/>${grid}${paths}
-    <text x="${W - R}" y="${H - 4}" text-anchor="end" font-size="9.5" fill="#66738c">${xlab || ''}</text><text x="${L + 2}" y="${T + 9}" font-size="9.5" fill="#66738c">${ylab || ''}</text></svg>
+    <line x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}" stroke="#aab8ac"/><line x1="${L}" x2="${L}" y1="${T}" y2="${H - B}" stroke="#aab8ac"/>${grid}${paths}
+    <text x="${W - R}" y="${H - 4}" text-anchor="end" font-size="9.5" fill="#586960">${xlab || ''}</text><text x="${L + 2}" y="${T + 9}" font-size="9.5" fill="#586960">${ylab || ''}</text></svg>
     <div class="lg">${series.map(s => `<span style="--c:${s.color}">${esc(s.name)}</span>`).join('')}</div>`;
   el.querySelectorAll('circle').forEach(c => { c.addEventListener('mousemove', ev => showTip(ev, `${esc(series[+c.dataset.s].name)}<br>${xlab || 'x'} = ${xfmt(+c.dataset.x)}<br>${ylab || 'y'} = ${yfmt(+c.dataset.y)}`)); c.addEventListener('mouseleave', hideTip); });
 }
@@ -424,7 +425,7 @@ function histSeries(h, N) { if (!h || !h.edges?.length) return []; const out = [
 function barRows(el, { title, cap, labels, values, colors, vfmt }) {
   const vmax = Math.max(...values.filter(isNum), 1e-9), W = 380, rowH = 16, L = 118;
   const rows = labels.map((lab, i) => { const v = values[i]; const w = isNum(v) ? Math.max(v / vmax * (W - L - 60), 0) : 0; const y = i * rowH;
-    return `<text x="${L - 6}" y="${y + 11.5}" text-anchor="end" font-size="10" fill="#9aa6bd">${esc(lab)}</text><rect x="${L}" y="${y + 3}" width="${w.toFixed(1)}" height="10" rx="2" fill="${colors[i]}" opacity=".9"/><text x="${(L + w + 5).toFixed(1)}" y="${y + 11.5}" font-size="10" fill="#e8ecf4" font-family="IBM Plex Mono,monospace">${isNum(v) ? vfmt(v) : '—'}</text>`; }).join('');
+    return `<text x="${L - 6}" y="${y + 11.5}" text-anchor="end" font-size="10" fill="#536459">${esc(lab)}</text><rect x="${L}" y="${y + 3}" width="${w.toFixed(1)}" height="10" rx="2" fill="${colors[i]}" opacity=".9"/><text x="${(L + w + 5).toFixed(1)}" y="${y + 11.5}" font-size="10" fill="#26312b" font-family="IBM Plex Mono,monospace">${isNum(v) ? vfmt(v) : '—'}</text>`; }).join('');
   el.innerHTML = `<h4>${title}</h4><div class="cap">${cap || ''}</div><svg viewBox="0 0 ${W} ${labels.length * rowH + 2}" role="img" aria-label="${title}">${rows}</svg>`;
 }
 function renderDist(t) {
@@ -433,21 +434,21 @@ function renderDist(t) {
   const cur = t.stats, ctrl = t.id === 'T0' ? t.stats_control : t.stats_forebrain;
   const ser = [];
   if (cur) ser.push({ name: t.id === 'T0' ? '果蝇实测' : `${t.id} ${t.name}`, color: TIER_COLORS[t.id], pts: histSeries(cur.hist_kout, cur.N) });
-  if (ctrl) ser.push({ name: t.id === 'T0' ? '生成对照' : '前脑子网', color: t.id === 'T0' ? '#c98a1a' : '#d9c4ff', dash: true, pts: histSeries(ctrl.hist_kout, ctrl.N) });
+  if (ctrl) ser.push({ name: t.id === 'T0' ? '生成对照' : '前脑子网', color: t.id === 'T0' ? '#846145' : '#776788', dash: true, pts: histSeries(ctrl.hist_kout, ctrl.N) });
   if (t.id !== 'T0' && fly.stats) ser.push({ name: '果蝇实测', color: TIER_COLORS.T0, width: 1.2, pts: histSeries(fly.stats.hist_kout, fly.stats.N) });
   lineChart(mk(), { title: '出度分布', cap: '对数分箱；纵轴为落入该箱的节点占比。重尾表明少数枢纽神经元连接极多。', series: ser, xlab: '出度 k', ylab: '节点占比', yfmt: v => v.toExponential(2), xfmt: v => fmtInt(v) });
   const rc = []; const addRc = (name, color, st, dash) => { if (st?.rich_club?.length) rc.push({ name, color, dash, pts: st.rich_club.filter(r => r.phi > 0).map(r => [r.k, r.phi]) }); };
-  if (t.id === 'T0') { addRc('果蝇实测', TIER_COLORS.T0, t.stats); addRc('生成对照', '#c98a1a', t.stats_control, true); addRc('实测 w≥5', '#8a6a24', t.stats_w5, true); }
-  else { addRc(`${t.id} ${t.name}`, TIER_COLORS[t.id], t.stats); addRc('前脑子网', '#d9c4ff', t.stats_forebrain, true); addRc('果蝇实测', TIER_COLORS.T0, fly.stats); }
+  if (t.id === 'T0') { addRc('果蝇实测', TIER_COLORS.T0, t.stats); addRc('生成对照', '#846145', t.stats_control, true); addRc('实测 w≥5', '#8a6a24', t.stats_w5, true); }
+  else { addRc(`${t.id} ${t.name}`, TIER_COLORS[t.id], t.stats); addRc('前脑子网', '#776788', t.stats_forebrain, true); addRc('果蝇实测', TIER_COLORS.T0, fly.stats); }
   lineChart(mk(), { title: 'Rich-club 系数 φ(k)', cap: '度大于 k 的节点之间的连接密度。曲线上扬 = 枢纽之间彼此紧密相连（“富人俱乐部”）。', series: rc, xlab: '度阈值 k', ylab: 'φ(k)', ylog: false, yfmt: v => fmt(v, 3), xfmt: v => fmtInt(v) });
   if (cur?.path_hist_directed) { const ph = cur.path_hist_directed; const tot = ph.reduce((a, b) => a + b, 0) || 1; const labels = ph.map((_, i) => `${i} 步`).filter((_, i) => i > 0 && ph[i] > 0);
     barRows(mk(), { title: '有向最短路径分布', cap: `从 200 个随机源神经元出发，到达其他神经元所需的突触步数（平均 ${fmt(cur.path_len_directed, 2)} 步）。`, labels, values: ph.filter((v, i) => i > 0 && v > 0).map(v => v / tot), colors: labels.map(() => TIER_COLORS[t.id]), vfmt: v => (v * 100).toFixed(1) + '%' }); }
   if (t.id === 'T0' && d.edr_curve) { const c = d.edr_curve; const pts = c.x.map((x, i) => [x, c.rel_prob[i]]).filter(p => p[1] > 0 && p[0] >= 25 && p[0] <= 900);
     const lam = c.lambda_per_mm / 1000; const p0 = pts.find(p => p[0] >= 100) || pts[0]; const fitPts = pts.map(p => [p[0], p0[1] * Math.exp(-lam * (p[0] - p0[0]))]).filter(p => p[1] > 1e-4);
-    lineChart(mk(), { title: '连接概率 vs 胞体距离', cap: `相对连接概率（目标距离分布 ÷ 随机对距离分布）；虚线为指数距离规则拟合 λ = ${fmt(c.lambda_per_mm, 1)}/mm。`, series: [{ name: '果蝇实测', color: TIER_COLORS.T0, pts }, { name: '指数拟合', color: '#c98a1a', dash: true, pts: fitPts }], xlog: false, ylog: true, xlab: '胞体距离 µm', ylab: '相对概率', xfmt: v => fmtInt(v), yfmt: v => fmt(v, 3) }); }
+    lineChart(mk(), { title: '连接概率 vs 胞体距离', cap: `相对连接概率（目标距离分布 ÷ 随机对距离分布）；虚线为指数距离规则拟合 λ = ${fmt(c.lambda_per_mm, 1)}/mm。`, series: [{ name: '果蝇实测', color: TIER_COLORS.T0, pts }, { name: '指数拟合', color: '#846145', dash: true, pts: fitPts }], xlog: false, ylog: true, xlab: '胞体距离 µm', ylab: '相对概率', xfmt: v => fmtInt(v), yfmt: v => fmt(v, 3) }); }
   // cross-tier comparison
   const cmp = d.compare; if (cmp?.labels?.length) {
-    const colors = cmp.labels.map(l => l.includes('前脑') ? '#d9c4ff' : l.includes('对照') ? '#c98a1a' : (l.startsWith('T3c') ? TIER_COLORS.T3c : l.startsWith('T3b') ? TIER_COLORS.T3b : TIER_COLORS[l.slice(0, 2)]) || '#9aa6bd');
+    const colors = cmp.labels.map(l => l.includes('前脑') ? '#776788' : l.includes('对照') ? '#846145' : (l.startsWith('T3c') ? TIER_COLORS.T3c : l.startsWith('T3b') ? TIER_COLORS.T3b : TIER_COLORS[l.slice(0, 2)]) || '#536459');
     const defs = [['clustering_global', '聚类系数 C', v => fmt(v, 4)], ['path_len_directed', '平均有向路径 L', v => fmt(v, 2)], ['small_world_S', '小世界指数 S', v => fmt(v, 0)],
       ['Q_modules', '模块度 Q（解剖模块）', v => fmt(v, 3)], ['hub_top1pct_edge_share', '前 1% 枢纽承载的边', v => (v * 100).toFixed(0) + '%'], ['reciprocity', '互惠率', v => fmt(v, 3)]];
     const h = document.createElement('h3'); h.textContent = '跨层级对比（同节点数、同平均度）'; pane.appendChild(h);
@@ -462,7 +463,7 @@ function renderLesion(pane) {
   const h = document.createElement('h3'); h.textContent = '损毁实验（神经外科视角）'; pane.appendChild(h);
   const mk = () => { const el = document.createElement('div'); el.className = 'chart'; pane.appendChild(el); return el; };
   const conds = Object.keys(cur.conditions); const labels = conds.map(c => c === 'anatomical' ? `解剖性损毁（${cur.anatomical_label.split('（')[0]}）` : LESION_LABELS[c] || c);
-  const colors = conds.map(c => c.startsWith('hubs') ? '#fb7185' : c === 'anatomical' ? '#fb923c' : c === 'baseline' ? TIER_COLORS[t.id] : '#9aa6bd');
+  const colors = conds.map(c => c.startsWith('hubs') ? '#a84e51' : c === 'anatomical' ? '#a1623f' : c === 'baseline' ? TIER_COLORS[t.id] : '#536459');
   barRows(mk(), { title: '有向可达比例', cap: `切除后仍能从随机源到达的节点比例（完整网络 ${(cur.conditions.baseline.reach * 100).toFixed(1)}%）。切除枢纽与切除随机节点的差距就是网络对"关键结构"的依赖。`, labels, values: conds.map(c => cur.conditions[c].reach), colors, vfmt: v => (v * 100).toFixed(1) + '%' });
   barRows(mk(), { title: '平均有向路径（可达对）', cap: '切除后幸存通路的平均步数。', labels, values: conds.map(c => cur.conditions[c].L_dir), colors, vfmt: v => fmt(v, 2) });
   barRows(mk(), { title: '全局效率', cap: '可达对的 1/距离 之和除以对数；越高越好。', labels, values: conds.map(c => cur.conditions[c].efficiency), colors, vfmt: v => fmt(v, 4) });

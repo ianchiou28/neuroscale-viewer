@@ -3,6 +3,7 @@ const input = document.querySelector("#search");
 const topic = document.querySelector("#topic");
 const count = document.querySelector("#record-count");
 const records = Array.from(document.querySelectorAll(".record"));
+const groups = Array.from(document.querySelectorAll(".archive-group"));
 const searchable = records.map(record => record.textContent.toLocaleLowerCase());
 
 function filterRecords() {
@@ -13,6 +14,9 @@ function filterRecords() {
     record.hidden = !matchesTopic || !terms.every(term => searchable[index].includes(term));
     if (!record.hidden) total += 1;
   });
+  for (const group of groups) {
+    group.hidden = !group.querySelector(".record:not([hidden])");
+  }
   count.textContent = total === 0 ? "没有符合条件的记录" : `${total} 篇记录`;
 }
 

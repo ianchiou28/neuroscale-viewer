@@ -3,18 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f6ef">
 <title>实验记录 · NeuroScale</title>
 <meta name="description" content="按主题浏览 NeuroScale 的研究实验记录与方法。">
-<link rel="stylesheet" href="../research.css">
-<script defer src="records.js"></script>
+<link rel="stylesheet" href="../../site.css">
+<link rel="stylesheet" href="../research.css?v=paper">
+<script defer src="records.js?v=paper"></script>
 </head>
 <body>
-<header class="mast"><div class="shell mast-inner">
-<a class="brand" href="../../">NeuroScale</a>
-<nav aria-label="站点导航"><a href="../">研究进展</a><a href="../../">3D 查看器</a><a href="../../report/">早期报告</a></nav>
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="site-header"><div class="site-frame">
+<a class="wordmark" href="../../research/"><strong>NeuroScale</strong><span>研究记录</span></a>
+<nav class="site-nav" aria-label="站点导航"><a href="../../research/">研究进展</a> <a href="../../research/records/" aria-current="page">实验记录</a> <a href="../../report/">推演报告</a> <a href="../../">3D 查看器</a></nav>
 </div></header>
-<main class="shell records-main">
-<header class="records-intro"><h1>实验记录</h1><p>涵盖结构、行为、动力学、开放评测与推理。每条记录保留当时的方法、结果与限制，后续修正标在相关条目内。</p></header>
+<main class="article-frame records-main" id="main">
+<header class="article-intro"><h1>实验记录</h1><p class="subtitle">涵盖结构、行为、动力学、开放评测与推理。每条记录保留当时的方法、结果与限制，后续修正标在相关条目内。</p></header>
 <div class="filters" id="filters" hidden>
 <label>关键词<input id="search" type="search" placeholder="例如 IBL、损毁、检查点"></label>
 <label>研究主题<select id="topic"><option value="">全部主题</option><option value="structure">结构与损毁</option>
@@ -24,7 +27,8 @@
 <option value="inference">对照实验与精确推理</option></select></label>
 </div>
 <p class="record-status" id="record-count" role="status">53 篇记录</p>
-<div id="records"><details class="record" id="r00" data-topic="structure">
+<div id="records"><section class="archive-group" aria-labelledby="group-r00"><h2 id="group-r00">结构与损毁</h2>
+<details class="record" id="r00" data-topic="structure">
 <summary><span>推演框架：从果蝇连接组到&quot;哺乳类以上&quot;的智能网络</span><span class="topic">结构与损毁</span></summary>
 <div class="record-body"><p class="topic"><a href="#r00">本条记录链接</a></p><p class="note">这是早期结构推演。有关智能层级和可塑性的表述为研究假设。</p>
 <blockquote>
@@ -2631,6 +2635,8 @@ py -X utf8 -u src/evaluate_system.py
 <p>当前网络仍是结构假说，不是已经学会任务的智能体。工程测试、方向残差或图指标均不能替代“小鼠等级”的行为验证。</p>
 </div>
 </details>
+</section>
+<section class="archive-group" aria-labelledby="group-r09"><h2 id="group-r09">行为与学习</h2>
 <details class="record" id="r09" data-topic="behavior">
 <summary><span>行为验证协议：IBL 决策基准 v1</span><span class="topic">行为与学习</span></summary>
 <div class="record-body"><p class="topic"><a href="#r09">本条记录链接</a></p>
@@ -4306,6 +4312,8 @@ py -X utf8 src/evaluate_system.py
 <p>上述“新图／学习种子尚未验证”是本文历史时点状态。十组新种子复验结果现已完整落盘（40 模型），三递归图类各 10/10 核心机制门通过。新增同双状态／读出／计算预算的输入路由小对照均值 +1.82 pp，未过冻结 +3 pp 晋级线，因此旧约 14 pp 收益不能全归因于感觉／历史分流。当前证据、重放覆盖边界和 COSYNE 机制稿见 <a href="#r49">49</a>；本文不覆盖历史记录。</p>
 </div>
 </details>
+</section>
+<section class="archive-group" aria-labelledby="group-r26"><h2 id="group-r26">全尺度动力学</h2>
 <details class="record" id="r26" data-topic="dynamics">
 <summary><span>七千万神经元系统合同与容量基线</span><span class="topic">全尺度动力学</span></summary>
 <div class="record-body"><p class="topic"><a href="#r26">本条记录链接</a></p>
@@ -5413,6 +5421,8 @@ py -X utf8 src/evaluate_system.py
 </ul>
 </div>
 </details>
+</section>
+<section class="archive-group" aria-labelledby="group-r35"><h2 id="group-r35">动物参照与开放评测</h2>
 <details class="record" id="r35" data-topic="benchmarks">
 <summary><span>小鼠参照能力评分实验：MCES-v1</span><span class="topic">动物参照与开放评测</span></summary>
 <div class="record-body"><p class="topic"><a href="#r35">本条记录链接</a></p><p class="note">这是原 MCES-v1 合同。后续公开数据路径与阶段核验见 <a href="#r36">MCES-Open</a>和<a href="#r42">阶段核验</a>。</p>
@@ -6864,6 +6874,8 @@ py -X utf8 src/evaluate_system.py
 <p>结果和合同原文件保留为历史审计记录，纠正元数据见 <code>submission/cosyne_2027/evidence_manifest.json</code>。两页稿只使用复核后的口径。</p>
 </div>
 </details>
+</section>
+<section class="archive-group" aria-labelledby="group-r49"><h2 id="group-r49">对照实验与精确推理</h2>
 <details class="record" id="r49" data-topic="inference">
 <summary><span>COSYNE 机制主线与资源匹配对照</span><span class="topic">对照实验与精确推理</span></summary>
 <div class="record-body"><p class="topic"><a href="#r49">本条记录链接</a></p>
@@ -7558,8 +7570,13 @@ Q = A · features
 <li>十个种子的严格净收益交叉点均为 1 个试次。这是由完整回放平均成本算出的估计，单试次作业延迟未实测。</li></ul>
 <p>原核验覆盖 61,210 个正确性试次、12,600 次构造测量和 60 次计时回放。独立检查从记录重算了配对统计与严格净收益不等式。</p>
 <p><a href="../data/experiment-summary.json">逐种子汇总数据</a></p>
-</div></details></div>
+</div></details>
+</section>
+</div>
 </main>
-<footer class="footer"><div class="shell"><span>NeuroScale</span><time datetime="2026-11-25">2026-11-25 更新</time></div></footer>
+<footer class="site-footer"><div class="site-frame">
+<a class="wordmark" href="../../research/"><strong>NeuroScale</strong></a>
+<nav class="footer-nav" aria-label="页底导航"><a href="../../research/records/">实验记录</a><a href="#main">回到正文开头</a></nav>
+</div></footer>
 </body>
 </html>
